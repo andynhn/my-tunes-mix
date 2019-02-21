@@ -1,0 +1,163 @@
+@charset "ISO-8859-1";
+
+.jumbotron {
+    background-image: url("../img/audio-dj-mix-63703.jpg");
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: cover;
+    height: 400px;
+    border-radius: 0 !important;
+}
+
+/*----- REGISTER FORM -----*/
+
+.register-page {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+.form-register {
+	width: 100%;
+	max-width: 330px;
+	padding: 10px;
+	margin: auto;
+}
+.form-register .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 10px;
+	font-size: 14px;
+}
+.form-register .form-control:focus {
+	z-index: 2;
+}
+#inputEmailRegister {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#inputUsername {
+	margin-top: -1px;
+	margin-bottom: -1px;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#inputFname {
+	margin-top: -1px;
+	margin-bottom: -1px;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#inputLname {
+	margin-top: -1px;
+	margin-bottom: -1px;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#inputPasswordRegister {
+	margin-top: -1px;
+	margin-bottom: -1px;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#inputConfirmPassword {
+	margin-bottom: 15px;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+
+/*----- LOGIN FORM -----*/
+
+.login-page {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+.form-login {
+	width: 100%;
+	max-width: 330px;
+	padding: 10px;
+	margin: auto;
+}
+.form-login .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 10px;
+	font-size: 14px;
+}
+.form-login .form-control:focus {
+	z-index: 2;
+}
+#inputEmailLogin {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#inputPasswordLogin {
+	margin-bottom: 15px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+/*----- ADD SONG FORM -----*/
+
+.addsong-page {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+.form-addsong {
+	width: 100%;
+	max-width: 330px;
+	padding: 10px;
+	margin: auto;
+}
+.form-addsong .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 10px;
+	font-size: 14px;
+}
+.form-addsong .form-control:focus {
+	z-index: 2;
+}
+#inputYouTubeLinkDesc {
+	margin-bottom: 40px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+/*----- SHOW SONG PAGE -----*/
+
+.showsong-page {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+
+/*----- GENERAL CSS STYLING -----*/
+
+
