@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>${user.fname}'s Top Ten Songs</title>
+    <title>Discover Music</title>
 </head>
 <body>
 	<!-- NAV BAR -->
@@ -27,11 +27,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/songs/new">Add New Song</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/search/topTen"><strong>Your Top 10</strong><span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/discover">Discover</a>
+                    <a class="nav-link" href="/search/topTen">Your Top 10</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/discover"><strong>Discover</strong> <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Log Out</a>
@@ -46,8 +46,37 @@
 	</div>
     
     <div class="container mt-3">
-    	<h5 class="text-center">Your Top 10 Highest Rated Songs</h5>
-        <table class="table table-sm">
+    	<h5 class="text-center">Discover Music Added by Other Users</h5>
+    	
+    	
+    	<div class="container">
+	    	<div class="row d-flex justify-content-between">
+				<form action="/discover" method="get" class="form-inline my-2 my-lg-0">
+				       <% if(request.getParameter("search") != null && request.getParameter("searchgenre") == null) { %>
+				           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Discover Artists" name="search" value='<%= request.getParameter("search") %>' aria-label="Search">
+				       <% } else { %>
+				           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Discover Artists" name="search" aria-label="Search">
+				       <% } %>
+				    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Discover Artists</button>
+				</form>
+		       <form action="/discover" method="get" class="form-inline my-2 my-lg-0">
+		       		<select name="searchgenre" id="inputSongGenre" class="form-control form-control-sm mr-sm-2">
+			           	<option value=""> -- GENRE -- </option>
+			           	<option value="pop">Pop</option>
+			           	<option value="hip hop">Hip-Hop</option>
+			           	<option value="dance electronic">Dance/Electronic</option>
+			           	<option value="country">Country</option>
+			           	<option value="rock">Rock</option>
+			           	<option value="alternative">Alternative</option>
+			           	<option value="latin">Latin</option>
+			           	<option value="international">International</option>
+			           	<option value="rhythm and blues">Rhythm and Blues</option>
+					</select>
+		           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Discover Genres</button>
+		       </form>	
+	    	</div>
+    	</div>
+        <table class="table table-sm mt-2">
             <thead>
                 <tr>
                 	<th scope="col">Play</th>
@@ -55,6 +84,7 @@
                     <th scope="col">Artist</th>
                     <th scope="col">Genre</th>
                     <th scope="col">Rating</th>
+                    <th scope="col">Added By</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -80,18 +110,22 @@
 								<c:otherwise>N/A</c:otherwise>
 							</c:choose>
                         </td>
+                        <td>${song.user.username}</td>
                         <td>
-                            <form action="/songs/${song.id}" method="post">
-                            	<a href="/songs/${song.id}/edit" class="btn btn-sm btn-info">Edit</a>
-                                <input type="hidden" name="_method" value="delete">
-                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                            </form>
+                            <form method="post" action="/songs">
+		    					<input type="hidden" name="title" value="${song.title}"/>
+							    <input type="hidden" name="artist" value="${song.artist}"/>
+							    <input type="hidden" name="genre" value="${song.genre}"/>
+							    <input type="hidden" name=rating value="5"/>
+	   						    <input type="hidden" name=youtubelink value="${song.youtubelink}"/>
+	   	    					<input type="hidden" name="user" value="${user.id}"/>
+	    						<button class="btn btn-sm btn-info mr-2" type="submit">Add to your Library</button>
+    						</form>
                         </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-        <p class="text-center">${addmoresongs}</p>
     </div>
     
     <!-- Modal -->

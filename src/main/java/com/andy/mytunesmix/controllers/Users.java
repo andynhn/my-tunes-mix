@@ -37,10 +37,10 @@ public class Users {
     // <---------- DISPLAY INDEX PAGE ---------->
     @RequestMapping("/")
     public String index(HttpSession session) {
-    	// redirect user to dashboard if they are already logged in.
+    	// redirect user to home if they are already logged in.
     	Long userId = (Long) session.getAttribute("userId");
     	if(userId != null) {
-    		return "redirect:/dashboard";
+    		return "redirect:/home";
     	}
         return "index.jsp";
     }
@@ -48,10 +48,10 @@ public class Users {
     // <---------- DISPLAY REGISTRATION PAGE ---------->
     @RequestMapping("/register")
     public String registerForm(@ModelAttribute("user") User user, HttpSession session) {
-    	// redirect user to dashboard if they are already logged in.
+    	// redirect user to home if they are already logged in.
     	Long userId = (Long) session.getAttribute("userId");
     	if(userId != null) {
-    		return "redirect:/dashboard";
+    		return "redirect:/home";
     	}
         return "register.jsp";
     }
@@ -59,10 +59,10 @@ public class Users {
     // <---------- DISPLAY LOGIN PAGE ---------->
     @RequestMapping("/login")
     public String login(HttpSession session) {
-    	// redirect user to dashboard if they are already logged in.
+    	// redirect user to home if they are already logged in.
     	Long userId = (Long) session.getAttribute("userId");
     	if(userId != null) {
-    		return "redirect:/dashboard";
+    		return "redirect:/home";
     	}
         return "login.jsp";
     }
@@ -78,7 +78,7 @@ public class Users {
 		} else {
 			User u = userService.registerUser(user);
 			session.setAttribute("userId",  u.getId());
-			return "redirect:/dashboard";
+			return "redirect:/home";
 		}
     }
     
@@ -91,16 +91,16 @@ public class Users {
     		// if valid, save the user's id into session
     		User u = userService.findByEmail(email);
     		session.setAttribute("userId", u.getId());
-    		return "redirect:/dashboard";
+    		return "redirect:/home";
     	} else {
     		model.addAttribute("error", "Invalid Credentials. Please try again.");
     		return "login.jsp";
     	}
     }
     
-    // <---------- DISPLAY DASHBOARD TO LOGGED IN USERS ---------->
-    @RequestMapping("/dashboard")
-    public String home(HttpSession session, Model model, RedirectAttributes flash, @RequestParam(value="search", required=false) String search) {
+    // <---------- DISPLAY HOME PAGE TO LOGGED IN USERS ---------->
+    @RequestMapping("/home")
+    public String home(HttpSession session, Model model, RedirectAttributes flash, @RequestParam(value="search", required=false) String search, @RequestParam(value="searchgenre", required=false) String searchgenre) {
         // access userId from session
     	Long userId = (Long) session.getAttribute("userId");
     	
@@ -114,8 +114,8 @@ public class Users {
     	User u = userService.findUserById(userId);
     	model.addAttribute("user", u);
     	
-    	// ...if the search form is filled, find that user's songs based on the search...
-    	if(search != null) {
+    	// ...if the search by artist form is filled and the search by genre form is not...
+    	if(search != null && searchgenre == null) {
     		List<Song> songsearch = songService.searchForSong(search);
     		ArrayList<Song> songs = new ArrayList<>();
     		for(int i=0; i<songsearch.size(); i++) {
@@ -124,13 +124,23 @@ public class Users {
     			}
     		}
     		model.addAttribute("songs", songs);
-    	// ...otherwise, save all of the user's songs in the list...
+    	// ... if the search by genre form is filled and the search by artist form is not..
+    	} else if(search == null && searchgenre != null) {
+    		List<Song> genresearch = songService.searchSongsByGenre(searchgenre);
+    		ArrayList<Song> songs = new ArrayList<>();
+    		for(int i=0; i<genresearch.size(); i++) {
+    			if(genresearch.get(i).getUser().getId() == userId) {
+    				songs.add(genresearch.get(i));
+    			}
+    		}
+    		model.addAttribute("songs", songs);
+    	// ...if no search forms are filed, get all of the user's songs...    	
     	} else {
     		List<Song> songs = songService.allUserSongs(userId);
         	model.addAttribute("songs", songs);
     	}
 
-    	return "dashboard.jsp";
+    	return "home.jsp";
     }
     
     // <---------- LOG OUT THE USER BY CLEARING SESSION ---------->

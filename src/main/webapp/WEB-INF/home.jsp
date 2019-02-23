@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>${user.fname}'s Top Ten Songs</title>
+    <title>${user.fname}'s Library</title>
 </head>
 <body>
 	<!-- NAV BAR -->
@@ -21,14 +21,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/home">Library</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home"><strong>Library</strong> <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/songs/new">Add New Song</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/search/topTen"><strong>Your Top 10</strong><span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/search/topTen">Your Top 10</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/discover">Discover</a>
@@ -46,8 +46,36 @@
 	</div>
     
     <div class="container mt-3">
-    	<h5 class="text-center">Your Top 10 Highest Rated Songs</h5>
-        <table class="table table-sm">
+    	<div class="container">
+	    	<div class="row d-flex justify-content-between">
+				<form action="/home" method="get" class="form-inline my-2 my-lg-0">
+				       <% if(request.getParameter("search") != null && request.getParameter("searchgenre") == null) { %>
+				           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search Artists" name="search" value='<%= request.getParameter("search") %>' aria-label="Search">
+				       <% } else { %>
+				           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search Artists" name="search" aria-label="Search">
+				       <% } %>
+				    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Artist</button>
+				</form>
+		       <form action="/home" method="get" class="form-inline my-2 my-lg-0">
+		       		<select name="searchgenre" id="inputSongGenre" class="form-control form-control-sm mr-sm-2">
+			           	<option value=""> -- GENRE -- </option>
+			           	<option value="pop">Pop</option>
+			           	<option value="hip hop">Hip-Hop</option>
+			           	<option value="dance electronic">Dance/Electronic</option>
+			           	<option value="country">Country</option>
+			           	<option value="rock">Rock</option>
+			           	<option value="alternative">Alternative</option>
+			           	<option value="latin">Latin</option>
+			           	<option value="international">International</option>
+			           	<option value="rhythm and blues">Rhythm and Blues</option>
+					</select>
+		           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Genre</button>
+		       </form>	
+	    	</div>
+    	</div>
+       
+       
+        <table class="table table-sm mt-2">
             <thead>
                 <tr>
                 	<th scope="col">Play</th>
@@ -91,7 +119,6 @@
                 </c:forEach>
             </tbody>
         </table>
-        <p class="text-center">${addmoresongs}</p>
     </div>
     
     <!-- Modal -->

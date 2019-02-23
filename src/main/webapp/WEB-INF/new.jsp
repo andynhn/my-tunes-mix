@@ -14,19 +14,23 @@
 <body>
 	<!-- NAV BAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+       	<a class="navbar-brand" href="/"><span class="brand"><strong>My Tunes Mix</strong></span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                    <a class="nav-link" href="/home">Library</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/songs/new"><strong>Add New Song</strong> <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/search/topTen">Top Songs</a>
+                    <a class="nav-link" href="/search/topTen">Your Top 10</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/discover">Discover</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Log Out</a>
@@ -34,6 +38,11 @@
             </ul>
         </div>
     </nav>
+    
+    <div class="container mt-3 d-flex justify-content-between">
+		<a href="/home"><button class="btn btn-sm btn-info my-2 my-sm-0">Back to Library</button></a>
+		<a href="https://www.youtube.com/" target="_blank"><button class="btn btn-sm btn-danger my-2 my-sm-0">Search for a Song on YouTube</button></a>
+	</div>
 
     <div class="container addsong-page mt-2">
         <form:form action="/songs" method="post" modelAttribute="song" class="form-addsong">
@@ -63,11 +72,11 @@
             </p>
             <p>
             	<form:select path="rating" id="inputSongRating" class="form-control">
-            		<form:option value="5">5</form:option>
-            		<form:option value="4">4</form:option>
-            		<form:option value="3">3</form:option>
-            		<form:option value="2">2</form:option>
-            		<form:option value="1">1</form:option>
+            		<form:option value="5">★★★★★</form:option>
+            		<form:option value="4">★★★★☆</form:option>
+            		<form:option value="3">★★★☆☆</form:option>
+            		<form:option value="2">★★☆☆☆</form:option>
+            		<form:option value="1">★☆☆☆☆</form:option>
             	</form:select>
                 <form:errors path="rating" style="color: red;"/>
             </p>

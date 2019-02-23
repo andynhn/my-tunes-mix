@@ -124,7 +124,7 @@
 	display: flex;
 	-ms-flex-align: center;
 	align-items: center;
-	padding-top: 40px;
+	padding-top: 10px;
 	padding-bottom: 40px;
 	background-color: #f5f5f5;
 }
@@ -160,4 +160,15 @@
 
 /*----- GENERAL CSS STYLING -----*/
 
-
+.fa-play {
+	font-size: 30px;
+	color: teal;
+}
+#disclaimer {
+	font-size: 12px;
+	font-style: italic;
+	
+}
+.capitalize {
+	text-transform: capitalize;
+}

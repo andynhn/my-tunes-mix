@@ -27,6 +27,11 @@ public class SongService {
 		return songRepository.findUserSongs(userId);
 	}
 	
+	// <---------- GET ALL OTHER SONGS FOR DISCOVER PAGE ---------->
+	public List<Song> allOtherSongs(Long userId) {
+		return songRepository.findOtherSongs(userId);
+	}
+	
 	// <---------- ADD A SONG ---------->
 	public Song createSong(Song s) {
 		// before saving into database, convert title and artist to lower case
@@ -60,13 +65,18 @@ public class SongService {
 		}
 	}
 	
-	// <---------- SEARCH FOR A SONG BY ARTIST ---------->
+	// <---------- SEARCH FOR SONGS BY ARTIST ---------->
 	public List<Song> searchForSong(String search) {
-		return songRepository.findByArtistContaining(search);
+		return songRepository.findByArtistContaining(search.toLowerCase());
+	}
+	
+	// <---------- SEARCH FOR SONGS BY GENRE ---------->
+	public List<Song> searchSongsByGenre(String search) {
+		return songRepository.findByGenreContaining(search);
 	}
 	
 	// <---------- FIND THE TOP TEN SONGS ---------->
-	public List<Song> findTopTen() {
-		return songRepository.findTopTen();
+	public List<Song> findTopTen(Long userId) {
+		return songRepository.findTopTen(userId);
 	}
 }
