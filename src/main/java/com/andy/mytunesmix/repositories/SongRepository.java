@@ -35,4 +35,5 @@ public interface SongRepository extends CrudRepository<Song, Long>{
 	// Return all other songs not uploaded by the logged in user
 	@Query("SELECT s FROM Song s WHERE user_id!=?1 ORDER BY title ASC")
 	List<Song> findOtherSongs(Long userId);
+	
 }

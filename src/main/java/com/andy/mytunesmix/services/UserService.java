@@ -17,10 +17,13 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 	
-	// <---------- REGISTER USER AND HASH THEIR PASSWORD ---------->
+	// <---------- REGISTER USER ---------->
 	public User registerUser(User user) {
+		// hash their password...
 		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashed);
+		// save email, first name, last name, and user name to database as all lower case...
+		user.setEmail(user.getEmail().toLowerCase());
 		user.setFname(user.getFname().toLowerCase());
 		user.setLname(user.getLname().toLowerCase());
 		user.setUsername(user.getUsername().toLowerCase());
@@ -39,8 +42,8 @@ public class UserService {
 	
 	// <---------- FIND USER BY ID ---------->
 	public User findUserById(Long id) {
+		// check to see if a user exists with the submitted id
 		Optional<User> u = userRepository.findById(id);
-		
 		if(u.isPresent()) {
 			return u.get();
 		} else {
@@ -51,12 +54,13 @@ public class UserService {
 	// <---------- AUTHENTICATE USER BEFORE LOGIN ---------->
 	public boolean authenticateUser(String email, String password) {
 		// first find the user by email
-		User user = userRepository.findByEmail(email);
-		// if we can't find it be email, return false
+		User user = userRepository.findByEmail(email.toLowerCase());
+		// if we can't find it be email, that email does not exist in the database. return false
 		if(user == null) {
 			return false;
+		// if a user is returned with that email
 		} else {
-			// if the passwords match, return true, else, return false;
+			// check if the bcrypt hash of the inputed password matches the bcrypt hashed password saved in the database;
 			if(BCrypt.checkpw(password,  user.getPassword())) {
 				return true;
 			} else {
@@ -67,8 +71,11 @@ public class UserService {
 	
 	// <---------- UPDATE A USER ---------->
 	public User update(User user) {
+		// hash their password
 		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashed);
+		// save email, first name, last name, and user name to database as all lower case...
+		user.setEmail(user.getEmail().toLowerCase());
 		user.setFname(user.getFname().toLowerCase());
 		user.setLname(user.getLname().toLowerCase());
 		user.setUsername(user.getUsername().toLowerCase());
@@ -77,12 +84,13 @@ public class UserService {
 	
 	// <---------- DELETE A USER ---------->
 	public void deleteUser(Long id) {
+		// check to see if a user exists with the submitted id
 		Optional<User> optionalUser = userRepository.findById(id);
 		if(optionalUser.isPresent()) {
 			// CascadeType.REMOVE in User.java will also delete the songs associated with that user.
 			userRepository.deleteById(id);
 		} else {
-			System.out.println("User does not exist.");
+			System.out.println("User does not exist");
 		}
 	}
 }

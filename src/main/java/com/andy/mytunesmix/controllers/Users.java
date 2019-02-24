@@ -38,47 +38,51 @@ public class Users {
     // <---------- DISPLAY INDEX PAGE ---------->
     @RequestMapping("/")
     public String index(HttpSession session) {
-    	// redirect user to home if they are already logged in.
     	Long userId = (Long) session.getAttribute("userId");
+    	// redirect user to home if they are already logged in.
     	if(userId != null) {
     		return "redirect:/home";
+    	} else {
+            return "index.jsp";
     	}
-        return "index.jsp";
     }
     
     // <---------- DISPLAY REGISTRATION PAGE ---------->
     @RequestMapping("/register")
     public String registerForm(@ModelAttribute("user") User user, HttpSession session) {
-    	// redirect user to home if they are already logged in.
     	Long userId = (Long) session.getAttribute("userId");
+    	// redirect user to home if they are already logged in.
     	if(userId != null) {
     		return "redirect:/home";
+    	} else {
+            return "register.jsp";
     	}
-        return "register.jsp";
     }
     
     // <---------- DISPLAY LOGIN PAGE ---------->
     @RequestMapping("/login")
     public String login(HttpSession session) {
-    	// redirect user to home if they are already logged in.
     	Long userId = (Long) session.getAttribute("userId");
+    	// redirect user to home if they are already logged in.
     	if(userId != null) {
     		return "redirect:/home";
+    	} else {
+            return "login.jsp";
     	}
-        return "login.jsp";
     }
     
     // <---------- POST REQUEST TO CREATE A USER ---------->
     @RequestMapping(value="/register", method=RequestMethod.POST)
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
     	// validations for email and password are implemented with "@Valid" and "BindingResult result" (based on validations specified in User.java)
-    	// the code below checks our custom validation for password and password confirmation (based on code written in UserValidator and messages.properties)
+    	// the code below checks our custom validation (based on code written in UserValidator and messages.properties)
     	userValidator.validate(user, result);
 		if(result.hasErrors()) {
 			return "register.jsp";
 		} else {
-			User u = userService.registerUser(user);
-			session.setAttribute("userId",  u.getId());
+			// User u = userService.registerUser(user);
+			// Create a new user, then save that user's auto generated ID into session as userId
+			session.setAttribute("userId", userService.registerUser(user).getId());
 			return "redirect:/home";
 		}
     }
@@ -86,12 +90,12 @@ public class Users {
     // <---------- POST REQUEST TO LOGIN A USER ---------->
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String loginUser(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession session) {
-    	// checks if the email and password credentials are valid
+    	// check if the email and password credentials are valid
     	boolean isAuthenticated = userService.authenticateUser(email, password);
     	if(isAuthenticated) {
     		// if valid, save the user's id into session
-    		User u = userService.findByEmail(email);
-    		session.setAttribute("userId", u.getId());
+    		// User u = userService.findByEmail(email);
+    		session.setAttribute("userId", userService.findByEmail(email).getId());
     		return "redirect:/home";
     	} else {
     		model.addAttribute("error", "Invalid Credentials. Please try again.");
@@ -104,115 +108,118 @@ public class Users {
     public String home(HttpSession session, Model model, RedirectAttributes flash, @RequestParam(value="search", required=false) String search, @RequestParam(value="searchgenre", required=false) String searchgenre) {
         // access userId from session
     	Long userId = (Long) session.getAttribute("userId");
-    	
-    	// ...if userId is not in session, create a flash message then REDIRECT to login...
+    	// ...if userId is not in session, REDIRECT to login...
     	if(userId == null) {
     		flash.addFlashAttribute("error", "You must be logged in to view that page!");
     		return "redirect:/login";
-    	} 
-    	
-    	// access the user based on the user id that was saved in session and then add that user to the model
-    	User u = userService.findUserById(userId);
-    	model.addAttribute("user", u);
-    	
-    	// ...if the search by artist form is filled and the search by genre form is not...
-    	if(search != null && searchgenre == null) {
-    		List<Song> songsearch = songService.searchForSong(search);
-    		ArrayList<Song> songs = new ArrayList<>();
-    		for(int i=0; i<songsearch.size(); i++) {
-    			if(songsearch.get(i).getUser().getId() == userId) {
-    				songs.add(songsearch.get(i));
-    			}
-    		}
-    		model.addAttribute("songs", songs);
-    	// ... if the search by genre form is filled and the search by artist form is not..
-    	} else if(search == null && searchgenre != null) {
-    		List<Song> genresearch = songService.searchSongsByGenre(searchgenre);
-    		ArrayList<Song> songs = new ArrayList<>();
-    		for(int i=0; i<genresearch.size(); i++) {
-    			if(genresearch.get(i).getUser().getId() == userId) {
-    				songs.add(genresearch.get(i));
-    			}
-    		}
-    		model.addAttribute("songs", songs);
-    	// ...if no search forms are filed, get all of the user's songs...    	
+    	// if the user is indeed logged in, perform the following checks...
     	} else {
-    		List<Song> songs = songService.allUserSongs(userId);
-        	model.addAttribute("songs", songs);
+        	// access the user based on the user id that was saved in session and then add that user to the model
+        	// User u = userService.findUserById(userId);
+        	model.addAttribute("user", userService.findUserById(userId));
+        	// ...if the search by artist form is filled and the search by genre form is not...
+        	if(search != null && searchgenre == null) {
+        		List<Song> songsearch = songService.searchForSong(search);
+        		ArrayList<Song> songs = new ArrayList<>();
+        		for(int i=0; i<songsearch.size(); i++) {
+        			if(songsearch.get(i).getUser().getId() == userId) {
+        				songs.add(songsearch.get(i));
+        			}
+        		}
+        		model.addAttribute("songs", songs);
+        		return "home.jsp";
+        	// ... if the search by genre form is filled and the search by artist form is not..
+        	} else if(search == null && searchgenre != null) {
+        		List<Song> genresearch = songService.searchSongsByGenre(searchgenre);
+        		ArrayList<Song> songs = new ArrayList<>();
+        		for(int i=0; i<genresearch.size(); i++) {
+        			if(genresearch.get(i).getUser().getId() == userId) {
+        				songs.add(genresearch.get(i));
+        			}
+        		}
+        		model.addAttribute("songs", songs);
+        		return "home.jsp";
+        	// ...if no search forms are filed, get all of the user's songs...    	
+        	} else {
+        		List<Song> songs = songService.allUserSongs(userId);
+            	model.addAttribute("songs", songs);
+            	return "home.jsp";
+        	}
     	}
-
-    	return "home.jsp";
     }
-    
-    
+    // <---------- DISPLAY EDIT PROFILE PAGE ---------->
     @RequestMapping("/users/{id}/edit")
     public String editUser(Model model, @PathVariable("id") Long id, HttpSession session, RedirectAttributes flash) {
         // access userId from session
-    	Long userId = (Long) session.getAttribute("userId");
-
-    	
-    	// ...if userId is not in session, create a flash message then REDIRECT to login...
+    	Long userId = (Long) session.getAttribute("userId");    	
+    	// ...if userId is not in session, REDIRECT to login...
     	if(userId == null) {
-    		flash.addFlashAttribute("error", "You must be logged in to view that page!");
+    		flash.addFlashAttribute("error", "You must be logged in to view that page");
     		return "redirect:/login";
+    	// ...if the user tries to edit a different user...
     	} else if(userId != id) {
-    		flash.addFlashAttribute("error", "You are not allowed access to that page!");
+    		flash.addFlashAttribute("error", "You are not allowed access to that page");
     		return "redirect:/home";
+    	} else {
+        	// access the user based on the user id that was saved in session and then add that user data to the model
+        	// User u = userService.findUserById(userId);
+    		model.addAttribute("user", userService.findUserById(userId));
+        	return "editProfile.jsp";
     	}
-    		
-    	// access the user based on the user id that was saved in session and then add that user to the model
-    	User u = userService.findUserById(userId);
-		model.addAttribute("user", u);
-    	return "editProfile.jsp";
     }
-    
+    // <---------- PROCESS REQUEST TO EDIT USER INFORMATION ---------->
     @RequestMapping("/users/{id}/update")
     public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult result, @PathVariable("id") Long id, HttpSession session, RedirectAttributes flash) {
         // access userId from session
     	Long userId = (Long) session.getAttribute("userId");
-
-    	// ...if userId is not in session, create a flash message then REDIRECT to login...
+    	// ...if userId is not in session, REDIRECT to login...
     	if(userId == null) {
     		flash.addFlashAttribute("error", "You must be logged in to view that page!");
     		return "redirect:/login";
+    	// ...if the user tries to edit a song that they did not add themselves...
     	} else if(userId != id) {
     		flash.addFlashAttribute("error", "You are not allowed access to that page!");
     		return "redirect:/home";
-    	}
-    	
-    	userValidator.validateUpdate(user, result, userService.findUserById(userId));
-    	if(result.hasErrors()) {
-    		return "editProfile.jsp";
     	} else {
-    		userService.update(user);
-    		return "redirect:/home";
+    		//...otherwise, check to see if the form data is valid...
+        	userValidator.validateUpdate(user, result, userService.findUserById(userId));
+        	if(result.hasErrors()) {
+        		return "editProfile.jsp";
+        	//...if the form data is valid, update the user, then redirect to home page
+        	} else {
+        		userService.update(user);
+        	}
+        	return "redirect:/home";
     	}
     }
     
     // <---------- DELETE A USER BY ID ---------->
     @RequestMapping(value="/users/{id}", method=RequestMethod.DELETE)
     public String destroy(@PathVariable("id") Long id, HttpSession session, RedirectAttributes flash) {
-    	User u = userService.findUserById(id);
+        // access userId from session
     	Long userId = (Long) session.getAttribute("userId");
-    	
+    	// access user based on path variable id
+    	User u = userService.findUserById(id);
+    	// if the user is not logged in...
     	if(userId == null) {
     		return "redirect:/login";
+    	// ...if that user id does not belong to anyone (does not exist)...
+    	} else if(u == null) {
+    		return "redirect:/home";
+    	// ...if the user tries to delete a different user...
     	} else if(userId != u.getId()) {
     		return "redirect:/home";
     	} else {
         	userService.deleteUser(id);
+        	session.invalidate();
+        	flash.addFlashAttribute("deletion", "Your account has been deleted.");
+        	return "redirect:/";
     	}
-
-    	session.invalidate();
-    	flash.addFlashAttribute("deletion", "Your account has been deleted.");
-    	return "redirect:/";
     }
     
     // <---------- LOG OUT THE USER BY CLEARING SESSION ---------->
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
-        // invalidate session
-        // redirect to login page
     	session.invalidate();
     	return "redirect:/";
     }

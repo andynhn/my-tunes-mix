@@ -29,11 +29,11 @@ public class UserValidator implements Validator {
 			errors.rejectValue("passwordConfirmation",  "Match");
 		}
 		// IF A USER IS RETURNED, THAT EMAIL IS ALREADY IN USE. DISPLAY ERROR
-		if(userService.findByEmail(user.getEmail()) != null) {
+		if(userService.findByEmail(user.getEmail().toLowerCase()) != null) {
 			errors.rejectValue("email",  "DuplicateEmail");
 		}
 		// IF A USER IS RETURNED, THAT USERNAME IS ALREADY IN USE. DISPLAY ERROR
-		if(userService.findByUsername(user.getUsername()) != null) {
+		if(userService.findByUsername(user.getUsername().toLowerCase()) != null) {
 			errors.rejectValue("username",  "DuplicateUsername");
 		}
 	}
@@ -46,11 +46,11 @@ public class UserValidator implements Validator {
 			errors.rejectValue("passwordConfirmation",  "Match");
 		}
 		// IF A USER IS RETURNED FROM THE FIRST SEARCH AND THAT USER IS NOT THE LOGGED IN USER, THEN THAT EMAIL IS BEING USED BY SOMEONE ELSE. DISPLAY ERROR
-		if(userService.findByEmail(submittedUser.getEmail()) != null && !submittedUser.getEmail().equals(user.getEmail())) {
+		if(userService.findByEmail(submittedUser.getEmail().toLowerCase()) != null && !submittedUser.getEmail().toLowerCase().equals(user.getEmail())) {
 			errors.rejectValue("email",  "DuplicateEmail");
 		}
 		// IF A USER IS RETURNED FROM THE FIRST SEARCH AND THAT USER IS NOT THE LOGGED IN USER, THEN THAT USERNAME IS BEING USED BY SOMEONE ELSE. DISPLAY ERROR
-		if(userService.findByUsername(submittedUser.getUsername()) != null && !submittedUser.getUsername().equals(user.getUsername())) {
+		if(userService.findByUsername(submittedUser.getUsername().toLowerCase()) != null && !submittedUser.getUsername().toLowerCase().equals(user.getUsername())) {
 			errors.rejectValue("username",  "DuplicateUsername");
 		}
 	}

@@ -53,7 +53,7 @@ public class SongService {
 	
 	// <---------- UPDATE A SONG ---------->
 	public Song update(Song song) {
-		// before saving into database, convert title and artist to lower case
+		// before saving into database, convert title, artist, and genre to lower case
 		song.setTitle(song.getTitle().toLowerCase());
 		song.setArtist(song.getArtist().toLowerCase());
 		song.setGenre(song.getGenre().toLowerCase());
@@ -77,7 +77,7 @@ public class SongService {
 	
 	// <---------- SEARCH FOR SONGS BY GENRE ---------->
 	public List<Song> searchSongsByGenre(String search) {
-		return songRepository.findByGenreContaining(search);
+		return songRepository.findByGenreContaining(search.toLowerCase());
 	}
 	
 	// <---------- FIND THE TOP TEN SONGS ---------->

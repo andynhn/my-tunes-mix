@@ -23,18 +23,12 @@ public class SongValidator implements Validator {
 	
 	@Override
 	public void validate(Object target, Errors errors) {
-		// IF A SONG IS RETURNED, THAT YOUTUBE VIDEO EXISTS IN THE DATABASE
-//		if(songService.findByYoutubeLink(song.getYoutubelink()) != null) {
-//			// ...IF THAT VIDEO WAS UPLOADED BY THE LOGGED IN USER, DISPLAY DUPLICATE VIDEO ERROR...
-//			if(songService.findByYoutubeLink(song.getYoutubelink()).getUser().getId() == song.getUser().getId()) {
-//				errors.rejectValue("youtubelink",  "DuplicateVideo");
-//			}
-//		}
+
 	}
 	
 	public void validateSong(Object target, Errors errors, User user) {
 		Song song = (Song) target;
-		// if the submitted form does not include a value for user, or if the user id submitted does not match the id of the logged in user (through tampering, etc.), display an error
+		// if the submitted form does not include a value for user, OR if the user id submitted does not match the id of the logged in user (through tampering, etc.), display an error
 		if(song.getUser() == null || song.getUser().getId() != user.getId()) {
 			errors.rejectValue("user", "NoUserData");
 		}
