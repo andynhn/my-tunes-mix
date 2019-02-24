@@ -152,7 +152,7 @@ public class Songs {
 		List<Song> songs = songService.findTopTen(userId);
 		// if the user has less than 10 songs in their library...
 		if(songs.size() < 10) {
-			model.addAttribute("addmoresongs", "Add more songs to your library to complete your top ten.");
+			model.addAttribute("addmoresongs", "Add more tunes to your library to complete your top ten.");
 		} 
 		model.addAttribute("songs", songs);
 		User u = userService.findUserById(userId);

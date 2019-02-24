@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>${user.fname}'s Top Ten Songs</title>
+    <title>${user.fname}'s Top Ten Tunes</title>
 </head>
 <body>
 	<!-- NAV BAR -->
@@ -25,7 +25,7 @@
                     <a class="nav-link" href="/home">Library</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/songs/new">Add New Song</a>
+                    <a class="nav-link" href="/songs/new">Add New Tunes</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/search/topTen"><strong>Your Top 10</strong><span class="sr-only">(current)</span></a>
@@ -40,7 +40,7 @@
 					</div>
 				</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Log Out</a>
+                    <a class="nav-link" href="/logout">Log Out <span class="fa fa-sign-out"></span></a>
                 </li>
             </ul>
         </div>
@@ -52,7 +52,7 @@
 	</div>
     
     <div class="container mt-3">
-    	<h5 class="text-center">Your Top 10 Highest Rated Songs</h5>
+    	<h5 class="text-center">Your Top 10 Highest Rated Tunes</h5>
         <table class="table table-sm">
             <thead>
                 <tr>

@@ -26,7 +26,7 @@
                     <a class="nav-link" href="/home">Library</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/songs/new">Add New Song</a>
+                    <a class="nav-link" href="/songs/new">Add New Tunes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/search/topTen">Your Top 10</a>
@@ -41,7 +41,7 @@
 					</div>
 				</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Log Out</a>
+                    <a class="nav-link" href="/logout">Log Out <span class="fa fa-sign-out"></span></a>
                 </li>
             </ul>
         </div>
@@ -56,7 +56,7 @@
 	
 	<div class="container editprofile-page mt-2">
 	    <form:form method="POST" action="/users/${user.id}/update" modelAttribute="user" class="form-updateprofile">
-	    	<h3 class="text-center mb-3">Edit Profile</h3>
+	    	<h5 class="text-center mb-3">Edit Profile</h5>
 	        <form:input type="email" path="email" placeholder="Email" id="inputEmailUpdate" class="form-control" required="required"/>
             <form:errors path="email" class="red"/>
 	        <form:input type="text" path="username" placeholder="Username" id="inputUsernameUpdate" class="form-control" required="required"/>

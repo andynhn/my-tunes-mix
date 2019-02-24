@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>Add New Song</title>
+    <title>Add New Tunes</title>
 </head>
 <body>
 	<!-- NAV BAR -->
@@ -25,7 +25,7 @@
                     <a class="nav-link" href="/home">Library</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/songs/new"><strong>Add New Song</strong> <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/songs/new"><strong>Add New Tunes</strong> <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/search/topTen">Your Top 10</a>
@@ -40,7 +40,7 @@
 					</div>
 				</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Log Out</a>
+                    <a class="nav-link" href="/logout">Log Out <span class="fa fa-sign-out"></span></a>
                 </li>
             </ul>
         </div>
@@ -53,7 +53,6 @@
 
     <div class="container addsong-page mt-2">
         <form:form action="/songs" method="post" modelAttribute="song" class="form-addsong">
-            <h3 class="text-center mb-3">Add New Song</h3>
             <p>
                 <form:input path="title" placeholder="Title" id="inputSongTitle" class="form-control" required="required" autofocus="autofocus"/>
                 <form:errors path="title" style="color: red;"/>
@@ -65,17 +64,25 @@
             <p>
             	<form:select path="genre" id="inputSongGenre" class="form-control" required="required">
                 	<form:option value=""> -- GENRE -- </form:option>
-                	<form:option value="pop">Pop</form:option>
-                	<form:option value="hip hop">Hip-Hop</form:option>
-                	<form:option value="dance electronic">Dance/Electronic</form:option>
-                	<form:option value="country">Country</form:option>
-                	<form:option value="rock">Rock</form:option>
+                	<form:option value="acoustic">Acoustic</form:option>
                 	<form:option value="alternative">Alternative</form:option>
-                	<form:option value="latin">Latin</form:option>
-                	<form:option value="international">International</form:option>
-                	<form:option value="rhythm and blues">Rhythm and Blues</form:option>
                 	<form:option value="classical">Classical</form:option>
+                	<form:option value="comedy">Comedy</form:option>
+                	<form:option value="country">Country</form:option>
+                	<form:option value="dance electronic">Dance/Electronic</form:option>
+                	<form:option value="easy listening">Easy Listening</form:option>
+                	<form:option value="folk">Folk</form:option>
+                	<form:option value="hip hop">Hip-Hop</form:option>
+                	<form:option value="holiday">Holiday</form:option>
+                	<form:option value="instrumental">Instrumental</form:option>
+                	<form:option value="jazz">Jazz</form:option>
+                	<form:option value="orchestral">Orchestral</form:option>
                 	<form:option value="podcast">Podcast</form:option>
+                	<form:option value="pop">Pop</form:option>
+                	<form:option value="rhythm and blues">Rhythm and Blues</form:option>
+                	<form:option value="rock">Rock</form:option>
+                	<form:option value="soundtrack">Soundtrack</form:option>
+                	<form:option value="world">World</form:option>
                 </form:select>
                 <form:errors path="genre" style="color: red;"/>
             </p>
@@ -91,14 +98,14 @@
             </p>
             <p>
                 <form:input path="youtubelink" placeholder="YouTube Video ID" id="inputYouTubeLink" class="form-control" required="required"/>
-                <small class="example-input"><a href="https://www.youtube.com/" target="_blank">Search for a Song on YouTube</a></small> <br>
+                <small class="example-input"><a href="https://www.youtube.com/" target="_blank">Search for a video on YouTube</a></small> <br>
                 <small class="example-input">E.g: https://youtu.be/<strong><span class="text-danger">VIDEO_ID</span></strong></small> <br>
                 <small class="example-input">E.g: https://www.youtube.com/watch?v=<strong><span class="text-danger">VIDEO_ID</span></strong></small>
             	<form:errors path="youtubelink" style="color: red;"/>
             </p>  
             <form:input type="hidden" path="user" value="${user.id}" required="required"/>
             
-            <button class="btn btn-md btn-primary btn-block" type="submit">Submit</button>
+            <button class="btn btn-md btn-primary btn-block" type="submit">Add to Library</button>
         </form:form>
     </div>
     

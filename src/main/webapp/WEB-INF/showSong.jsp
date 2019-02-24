@@ -25,7 +25,7 @@
                     <a class="nav-link" href="/home">Library</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/songs/new">Add New Song</a>
+                    <a class="nav-link" href="/songs/new">Add New Tunes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/search/topTen">Your Top 10</a>
@@ -40,7 +40,7 @@
 					</div>
 				</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Log Out</a>
+                    <a class="nav-link" href="/logout">Log Out <span class="fa fa-sign-out"></span></a>
                 </li>
             </ul>
         </div>
@@ -51,11 +51,11 @@
     		<div class="col-xs-12 col-md-12 col-lg-4" id="showSongDetails">
     		   	<h5 class="capitalize"><strong><c:out value="${song.title}"/></strong></h5>
     			<h5 class="mb-4"><em>by <span class="capitalize"><c:out value="${song.artist}"/></span></em></h5>
-		    	<h6 class="capitalize">genre: <c:out value="${song.genre}"/></h6>
+		    	<h6>Genre: <span class="capitalize"><c:out value="${song.genre}"/></span></h6>
 		    	<c:if test="${user.id != song.user.id}">
-		    		<h6>uploaded by: ${song.user.username}</h6>
+		    		<h6>Uploaded by: ${song.user.username}</h6>
 		    	</c:if>
-		    	<h6 class="mb-4">rating:
+		    	<h6 class="mb-4">Rating:
 		    		<c:choose>
 						<c:when test="${song.rating == 5}">★★★★★</c:when>
 						<c:when test="${song.rating == 4}">★★★★☆</c:when>
@@ -69,9 +69,9 @@
 		    	
 	    		<c:choose>
 	    			<c:when test="${user.id == song.user.id}">
-	    				<a href="/songs/${song.id}/edit" class="btn btn-sm btn-info">Edit Song</a>
+	    				<a href="/songs/${song.id}/edit" class="btn btn-sm btn-info">Edit</a>
 	    				<button class="btn modal-button-delete btn-sm btn-danger" data-toggle="modal" data-target="#confirmSongDeletionModalCenter" data-id="${song.id}" data-title="${song.title}" data-artist="${song.artist}">
-							Delete from Library
+							Delete
 						</button>
 	    			</c:when>
 	    			<c:otherwise>

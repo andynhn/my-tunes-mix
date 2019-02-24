@@ -25,7 +25,7 @@
                     <a class="nav-link" href="/home"><strong>Library</strong> <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/songs/new">Add New Song</a>
+                    <a class="nav-link" href="/songs/new">Add New Tunes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/search/topTen">Your Top 10</a>
@@ -40,7 +40,7 @@
 					</div>
 				</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Log Out</a>
+                    <a class="nav-link" href="/logout">Log Out <span class="fa fa-sign-out"></span></a>
                 </li>
             </ul>
         </div>
@@ -52,7 +52,6 @@
 	</div>
     
     <div class="container mt-3">
-    	<h5 class="text-center">Music Library</h5>
     	<div class="container">
 	    	<div class="row d-flex justify-content-between">
 				<form action="/home" method="get" class="form-inline my-2 my-lg-0">
@@ -66,17 +65,25 @@
 		       <form action="/home" method="get" class="form-inline my-2 my-lg-0">
 		       		<select name="searchgenre" id="inputSongGenre" class="form-control form-control-sm mr-sm-2">
 			           	<option value=""> -- GENRE -- </option>
-			           	<option value="pop">Pop</option>
-			           	<option value="hip hop">Hip-Hop</option>
-			           	<option value="dance electronic">Dance/Electronic</option>
-			           	<option value="country">Country</option>
-			           	<option value="rock">Rock</option>
-			           	<option value="alternative">Alternative</option>
-			           	<option value="latin">Latin</option>
-			           	<option value="international">International</option>
-			           	<option value="rhythm and blues">Rhythm and Blues</option>
-			           	<option value="classical">Classical</option>
-			           	<option value="podcast">Podcast</option>
+	                	<option value="acoustic">Acoustic</option>
+	                	<option value="alternative">Alternative</option>
+	                	<option value="classical">Classical</option>
+	                	<option value="comedy">Comedy</option>
+	                	<option value="country">Country</option>
+	                	<option value="dance electronic">Dance/Electronic</option>
+	                	<option value="easy listening">Easy Listening</option>
+	                	<option value="folk">Folk</option>
+	                	<option value="hip hop">Hip-Hop</option>
+	                	<option value="holiday">Holiday</option>
+	                	<option value="instrumental">Instrumental</option>
+	                	<option value="jazz">Jazz</option>
+	                	<option value="orchestral">Orchestral</option>
+	                	<option value="podcast">Podcast</option>
+	                	<option value="pop">Pop</option>
+	                	<option value="rhythm and blues">Rhythm and Blues</option>
+	                	<option value="rock">Rock</option>
+	                	<option value="soundtrack">Soundtrack</option>
+	                	<option value="world">World</option>
 					</select>
 		           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Genre</button>
 		       </form>	
