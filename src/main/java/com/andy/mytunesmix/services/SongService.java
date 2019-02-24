@@ -34,9 +34,10 @@ public class SongService {
 	
 	// <---------- ADD A SONG ---------->
 	public Song createSong(Song s) {
-		// before saving into database, convert title and artist to lower case
+		// before saving into database, convert title, artist, and genre to lower case
 		s.setTitle(s.getTitle().toLowerCase());
 		s.setArtist(s.getArtist().toLowerCase());
+		s.setGenre(s.getGenre().toLowerCase());
 		return songRepository.save(s);
 	}
 	
@@ -52,6 +53,10 @@ public class SongService {
 	
 	// <---------- UPDATE A SONG ---------->
 	public Song update(Song song) {
+		// before saving into database, convert title and artist to lower case
+		song.setTitle(song.getTitle().toLowerCase());
+		song.setArtist(song.getArtist().toLowerCase());
+		song.setGenre(song.getGenre().toLowerCase());
 		return songRepository.save(song);
 	}
 	
@@ -78,5 +83,9 @@ public class SongService {
 	// <---------- FIND THE TOP TEN SONGS ---------->
 	public List<Song> findTopTen(Long userId) {
 		return songRepository.findTopTen(userId);
+	}
+	// <---------- DISCOVER SONGS ---------->
+	public List<Song> discoverSongs(Long userId) {
+		return songRepository.discoverSongs(userId);
 	}
 }

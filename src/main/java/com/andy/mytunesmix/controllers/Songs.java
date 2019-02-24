@@ -20,16 +20,19 @@ import com.andy.mytunesmix.models.Song;
 import com.andy.mytunesmix.models.User;
 import com.andy.mytunesmix.services.SongService;
 import com.andy.mytunesmix.services.UserService;
+import com.andy.mytunesmix.validators.SongValidator;
 
 @Controller
 public class Songs {
 	
 	private final SongService songService;
 	private final UserService userService;
+	private final SongValidator songValidator;
 	
-	public Songs(SongService songService, UserService userService) {
+	public Songs(SongService songService, UserService userService, SongValidator songValidator) {
 		this.songService = songService;
 		this.userService = userService;
+		this.songValidator = songValidator;
 	}
 	
     // <---------- RENDER PAGE TO ADD A NEW SONG ---------->
@@ -37,7 +40,7 @@ public class Songs {
 	public String newSong(Model model, @ModelAttribute("song") Song song, HttpSession session, RedirectAttributes flash) {
 		Long userId = (Long) session.getAttribute("userId");
 		if(userId == null) {
-			flash.addFlashAttribute("error", "You must be logged in to view that page!");
+			flash.addFlashAttribute("error", "You must be logged in to view that page");
 			return "redirect:/login";
 		}
 		User u = userService.findUserById(userId);
@@ -50,10 +53,11 @@ public class Songs {
 	public String create(@Valid @ModelAttribute("song") Song song, BindingResult result, HttpSession session, RedirectAttributes flash) {
 		Long userId = (Long) session.getAttribute("userId");
 		if(userId == null) {
-			flash.addFlashAttribute("error", "You must be logged in to view that page!");
+			flash.addFlashAttribute("error", "You must be logged in to view that page");
 			return "redirect:/login";
 		}
-		
+		// Check to see if the user submitted a song without their user id attached (included as a hidden input)
+		songValidator.validateSong(song, result, userService.findUserById(userId));
 		if(result.hasErrors()) {
 			return "new.jsp";
 		} else {
@@ -67,16 +71,10 @@ public class Songs {
 	public String show(@PathVariable("id") Long id, Model model, HttpSession session, RedirectAttributes flash) {
 		Song s = songService.findSong(id);
 		Long userId = (Long) session.getAttribute("userId");
-		Long uploaderId = (Long) s.getUser().getId();
 		if(userId == null) {
-			flash.addFlashAttribute("error", "You must be logged in to view that page!");
+			flash.addFlashAttribute("error", "You must be logged in to view that page");
 			return "redirect:/login";
 		}
-		
-//		if(userId != uploaderId) {
-//			flash.addFlashAttribute("error", "You cannot view this song!");
-//			return "redirect:/home";
-//		}
 
 		model.addAttribute("song", s);
 		User u = userService.findUserById(userId);
@@ -90,10 +88,10 @@ public class Songs {
 		Song s = songService.findSong(id);
 		Long userId = (Long) session.getAttribute("userId");
 		if(userId == null) {
-			flash.addFlashAttribute("error", "You must be logged in to view that page!");
+			flash.addFlashAttribute("error", "You must be logged in to view that page");
 			return "redirect:/login";
 		} else if(userId != s.getUser().getId()) {
-			flash.addFlashAttribute("error", "You cannot edit this song!");
+			flash.addFlashAttribute("error", "You cannot edit this song");
 			return "redirect:/home";
 		}
 		User u = userService.findUserById(userId);
@@ -109,15 +107,16 @@ public class Songs {
 		Song s = songService.findSong(id);
 		Long userId = (Long) session.getAttribute("userId");
 		if(userId == null) {
-			flash.addFlashAttribute("error", "You must be logged in to view that page!");
+			flash.addFlashAttribute("error", "You must be logged in to view that page");
 			return "redirect:/login";
 		} else if(userId != s.getUser().getId()) {
-			flash.addFlashAttribute("error", "You cannot edit this song!");
+			flash.addFlashAttribute("error", "You cannot edit this song");
 			return "redirect:/home";
 		}
-		
+		// Check to see if the user submitted a song without their user id attached (included as a hidden input)
+		songValidator.validateSong(song, result, userService.findUserById(userId));
 		if(result.hasErrors()) {
-			return "editTruck.jsp";
+			return "editSong.jsp";
 		} else {
 			songService.update(song);
 			return "redirect:/home";
@@ -130,13 +129,14 @@ public class Songs {
 		Song s = songService.findSong(id);
 		Long userId = (Long) session.getAttribute("userId");
 		if(userId == null) {
-			flash.addFlashAttribute("error", "You must be logged in to view that page!");
+			flash.addFlashAttribute("error", "You must be logged in to view that page");
 			return "redirect:/login";
 		} else if(userId != s.getUser().getId()) {
-			flash.addFlashAttribute("error", "You cannot delete this song!");
+			flash.addFlashAttribute("error", "You cannot delete this song");
 			return "redirect:/home";
+		} else {
+			songService.deleteSong(id);
 		}
-		songService.deleteSong(id);
 		return "redirect:/home";
 	}
 	
@@ -145,24 +145,16 @@ public class Songs {
 	public String showTopTen(Model model, HttpSession session, RedirectAttributes flash) {
 		Long userId = (Long) session.getAttribute("userId");
 		if(userId == null) {
-			flash.addFlashAttribute("error", "You must be logged in to view that page!");
+			flash.addFlashAttribute("error", "You must be logged in to view that page");
 			return "redirect:/login";
 		}
-		// finds all of the user's songs, ordered by rating descending
-		List<Song> toptensearch = songService.findTopTen(userId);
-		ArrayList<Song> songs = new ArrayList<>();
-		// If the user has more than 10 songs in their library, save only the first 10 in the list
-		if(toptensearch.size() > 10) {
-			for(int i=0; i<10; i++) {
-				songs.add(toptensearch.get(i));
-			}
-			model.addAttribute("songs", songs);
-		// ...otherwise, add the entire list to the model
-		} else {
-			model.addAttribute("songs", toptensearch);
+		// finds the user's top ten songs, ordered by rating descending
+		List<Song> songs = songService.findTopTen(userId);
+		// if the user has less than 10 songs in their library...
+		if(songs.size() < 10) {
 			model.addAttribute("addmoresongs", "Add more songs to your library to complete your top ten.");
-		}
-
+		} 
+		model.addAttribute("songs", songs);
 		User u = userService.findUserById(userId);
     	model.addAttribute("user", u);
 		return "topTen.jsp";
@@ -173,13 +165,14 @@ public class Songs {
 	public String discover(Model model, HttpSession session, RedirectAttributes flash, @RequestParam(value="search", required=false) String search, @RequestParam(value="searchgenre", required=false) String searchgenre) {
 		Long userId = (Long) session.getAttribute("userId");
 		if(userId == null) {
-			flash.addFlashAttribute("error", "You must be logged in to view that page!");
+			flash.addFlashAttribute("error", "You must be logged in to view that page");
 			return "redirect:/login";
 		}
     	User u = userService.findUserById(userId);
     	model.addAttribute("user", u);
     	// ...if the search by artist form is filled and the search by genre form is not...
     	if(search != null && searchgenre == null) {
+    		System.out.println("Made it here");
     		List<Song> songsearch = songService.searchForSong(search);
     		ArrayList<Song> songs = new ArrayList<>();
     		for(int i=0; i<songsearch.size(); i++) {
@@ -200,7 +193,7 @@ public class Songs {
     		model.addAttribute("songs", songs);
     	// ...otherwise, save all of the other songs in the list...
     	} else {
-    		List<Song> songs = songService.allOtherSongs(userId);
+    		List<Song> songs = songService.discoverSongs(userId);
         	model.addAttribute("songs", songs);
     	}
     	return "discover.jsp";

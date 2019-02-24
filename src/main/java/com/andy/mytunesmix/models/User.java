@@ -3,6 +3,7 @@ package com.andy.mytunesmix.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -54,7 +55,8 @@ public class User {
 	private Date updatedAt;
 	
 	// One User to Many Songs
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	// CascadeType.REMOVE will delete all songs associated with a User when that user removes their account
+	@OneToMany(cascade=CascadeType.REMOVE, mappedBy="user", fetch=FetchType.LAZY)
 	private List<Song> songs;
 	
 	// CONSTRUCTORS

@@ -64,4 +64,25 @@ public class UserService {
 			}
 		}
 	}
+	
+	// <---------- UPDATE A USER ---------->
+	public User update(User user) {
+		String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		user.setPassword(hashed);
+		user.setFname(user.getFname().toLowerCase());
+		user.setLname(user.getLname().toLowerCase());
+		user.setUsername(user.getUsername().toLowerCase());
+		return userRepository.save(user);
+	}
+	
+	// <---------- DELETE A USER ---------->
+	public void deleteUser(Long id) {
+		Optional<User> optionalUser = userRepository.findById(id);
+		if(optionalUser.isPresent()) {
+			// CascadeType.REMOVE in User.java will also delete the songs associated with that user.
+			userRepository.deleteById(id);
+		} else {
+			System.out.println("User does not exist.");
+		}
+	}
 }

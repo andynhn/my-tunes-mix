@@ -1,24 +1,49 @@
 @charset "ISO-8859-1";
-
-.jumbotron {
-    background-image: url("../img/audio-dj-mix-63703.jpg");
-    background-repeat: no-repeat;
-    background-position: center; 
-    background-size: cover;
-    height: 400px;
-    border-radius: 0 !important;
+		
+#wrapper-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+	min-width: 300px;
 }
-
+#wrapper-opacity {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+	background-color: black;
+	border-radius: 10px;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+	width: 600px;
+	height: 350px;
+}
+#home-title {
+	font-size: 60px;
+	color: white;
+}
+ #home-sub-title {
+	color: white;
+	margin: 0px;
+	font-weight: bold;
+	font-size: 18px;
+}
 /*----- REGISTER FORM -----*/
 
 .register-page {
-	display: -ms-flexbox;
+	/*display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
-	align-items: center;
-	padding-top: 40px;
-	padding-bottom: 40px;
-	background-color: #f5f5f5;
+	align-items: center;*/
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	/*padding-top: 40px;
+	padding-bottom: 40px;*/
 }
 .form-register {
 	width: 100%;
@@ -30,7 +55,7 @@
 	position: relative;
 	box-sizing: border-box;
 	height: auto;
-	padding: 10px;
+	padding: 6px;
 	font-size: 14px;
 }
 .form-register .form-control:focus {
@@ -44,34 +69,34 @@
 #inputUsername {
 	margin-top: -1px;
 	margin-bottom: -1px;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
 }
 #inputFname {
 	margin-top: -1px;
 	margin-bottom: -1px;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
 }
 #inputLname {
 	margin-top: -1px;
 	margin-bottom: -1px;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
 }
 #inputPasswordRegister {
 	margin-top: -1px;
 	margin-bottom: -1px;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
 }
 #inputConfirmPassword {
 	margin-bottom: 15px;
@@ -82,13 +107,16 @@
 /*----- LOGIN FORM -----*/
 
 .login-page {
-	display: -ms-flexbox;
+	/*display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
-	align-items: center;
-	padding-top: 40px;
-	padding-bottom: 40px;
-	background-color: #f5f5f5;
+	align-items: center; */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	/*padding-top: 40px;
+	padding-bottom: 40px;*/
 }
 .form-login {
 	width: 100%;
@@ -100,7 +128,7 @@
 	position: relative;
 	box-sizing: border-box;
 	height: auto;
-	padding: 10px;
+	padding: 6px;
 	font-size: 14px;
 }
 .form-login .form-control:focus {
@@ -138,7 +166,7 @@
 	position: relative;
 	box-sizing: border-box;
 	height: auto;
-	padding: 10px;
+	padding: 6px;
 	font-size: 14px;
 }
 .form-addsong .form-control:focus {
@@ -158,6 +186,76 @@
 	background-color: #f5f5f5;
 }
 
+/*----- EDIT PROFILE FORM -----*/
+
+.editprofile-page {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	padding-top: 10px;
+	padding-bottom: 40px;
+	background-color: #f5f5f5;
+}
+.form-updateprofile {
+	width: 100%;
+	max-width: 330px;
+	padding: 10px;
+	margin: auto;
+}
+.form-updateprofile .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 6px;
+	font-size: 14px;
+}
+.form-updateprofile .form-control:focus {
+	z-index: 2;
+}
+#inputEmailUpdate {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+#inputUsernameUpdate {
+	margin-top: -1px;
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+#inputFnameUpdate {
+	margin-top: -1px;
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+#inputLnameUpdate {
+	margin-top: -1px;
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+#inputPasswordUpdate {
+	margin-top: -1px;
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+#inputConfirmPasswordUpdate {
+	margin-bottom: 15px;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+
 /*----- GENERAL CSS STYLING -----*/
 
 .fa-play {
@@ -167,8 +265,27 @@
 #disclaimer {
 	font-size: 12px;
 	font-style: italic;
-	
+}
+.example-input {
+	font-size: 12px;
 }
 .capitalize {
 	text-transform: capitalize;
+}
+.white{
+	color: white;
+}
+.red {
+	color: red;
+}
+.gold {
+	color: gold;
+}
+.bg-black-opacity] {
+	background: black;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+}
+.bg-black {
+	background: black;
 }

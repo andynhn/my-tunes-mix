@@ -10,12 +10,12 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>${user.fname}'s Library</title>
+    <title>Library</title>
 </head>
 <body>
 	<!-- NAV BAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    	<a class="navbar-brand" href="/"><span class="brand"><strong>My Tunes Mix</strong></span></a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    	<a class="navbar-brand" href="/"><span class="brand"><span class="fa fa-music"></span> <strong>My Tunes Mix</strong></span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,6 +33,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/discover">Discover</a>
                 </li>
+				<li class="nav-item dropdown">
+					<a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/users/${user.id}/edit">Edit Profile</a>
+					</div>
+				</li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Log Out</a>
                 </li>
@@ -46,6 +52,7 @@
 	</div>
     
     <div class="container mt-3">
+    	<h5 class="text-center">Music Library</h5>
     	<div class="container">
 	    	<div class="row d-flex justify-content-between">
 				<form action="/home" method="get" class="form-inline my-2 my-lg-0">
@@ -68,6 +75,8 @@
 			           	<option value="latin">Latin</option>
 			           	<option value="international">International</option>
 			           	<option value="rhythm and blues">Rhythm and Blues</option>
+			           	<option value="classical">Classical</option>
+			           	<option value="podcast">Podcast</option>
 					</select>
 		           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Genre</button>
 		       </form>	
@@ -109,11 +118,16 @@
 							</c:choose>
                         </td>
                         <td>
-                            <form action="/songs/${song.id}" method="post">
+                            <!--  <form action="/songs/${song.id}" method="post">
                             	<a href="/songs/${song.id}/edit" class="btn btn-sm btn-info">Edit</a>
                                 <input type="hidden" name="_method" value="delete">
                                 <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                            </form>
+                            </form> -->
+                            <!-- Button trigger modal -->
+                            <a href="/songs/${song.id}/edit" class="btn btn-sm btn-info">Edit</a>
+							<button class="btn modal-button-delete btn-sm btn-danger" data-toggle="modal" data-target="#confirmSongDeletionModalCenter" data-id="${song.id}" data-title="${song.title}" data-artist="${song.artist}">
+								Delete
+							</button>
                         </td>
                     </tr>
                 </c:forEach>
@@ -121,7 +135,7 @@
         </table>
     </div>
     
-    <!-- Modal -->
+    <!-- Video Modal -->
 	<div class="modal fade" id="viewVideoModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -132,7 +146,7 @@
 			        	src="" 
 			        	frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 			       		</iframe>
-			       		<p><small>Some YouTube videos do not allow embedding. If the video fails to load, try the app in a different browser (I recommend Firefox), or <a href="https://www.youtube.com/watch?v=${song.youtubelink}" target="_blank">watch it on YouTube</a>.</small></p>
+			       		<p><small>Some YouTube videos do not allow embedding. If the video fails to load, try a different browser (I recommend Firefox or Chrome), or <a href="https://www.youtube.com/watch?v=${song.youtubelink}" target="_blank">watch it on YouTube</a>.</small></p>
 			       		<p><small id="disclaimer">This application is for educational purposes only and is meant to demonstrate my ability to build Java/Spring applications. I do not own the content from the embedded YouTube video. All rights belong to their respective owners.</small></p>
 			       	
 					</div>
@@ -141,6 +155,32 @@
 					<button type="button" class="btn btn-sm btn-info" data-dismiss="modal">Close</button>
 				</div>
 			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+    <!-- Delete Song Modal -->
+	<div class="modal fade" id="confirmSongDeletionModalCenter" tabindex="-1" role="dialog" aria-labelledby="confirmSongDeletionModalCenter" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="#confirmSongDeletionModalCenterLongTitle"><strong><span class="capitalize selected-song-to-delete">${song.title}</span></strong> <br> <em>by <span class="capitalize selected-song-to-delete-artist">${song.artist}</span></em></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete this from your library?</p>
+			</div>
+			<div class="modal-footer delete-song-footer">
+				<form action="/songs/${song.id}" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                </form>
+			</div>
+		</div>
 		</div>
 	</div>
    	
@@ -160,6 +200,13 @@
 		    $("#viewVideoModalCenter iframe").attr("src", "");
 		    $("#viewVideoModalCenter .youtube-iframe a").attr("href", "");
 		});
+		
+		$(document).on("click", ".modal-button-delete", function() {
+			var songid = "/songs/" + $(this).data('id');
+			$(".selected-song-to-delete").html($(this).data('title'));
+			$(".selected-song-to-delete-artist").html($(this).data('artist'));
+			$(".delete-song-footer form").attr("action", songid);
+		})
 
 
 	</script>

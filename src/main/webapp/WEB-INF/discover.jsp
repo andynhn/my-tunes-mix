@@ -14,8 +14,8 @@
 </head>
 <body>
 	<!-- NAV BAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    	<a class="navbar-brand" href="/"><span class="brand"><strong>My Tunes Mix</strong></span></a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    	<a class="navbar-brand" href="/"><span class="brand"><span class="fa fa-music"></span> <strong>My Tunes Mix</strong></span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,6 +33,12 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/discover"><strong>Discover</strong> <span class="sr-only">(current)</span></a>
                 </li>
+                <li class="nav-item dropdown">
+					<a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/users/${user.id}/edit">Edit Profile</a>
+					</div>
+				</li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Log Out</a>
                 </li>
@@ -57,7 +63,7 @@
 				       <% } else { %>
 				           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Discover Artists" name="search" aria-label="Search">
 				       <% } %>
-				    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Discover Artists</button>
+				    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Artist</button>
 				</form>
 		       <form action="/discover" method="get" class="form-inline my-2 my-lg-0">
 		       		<select name="searchgenre" id="inputSongGenre" class="form-control form-control-sm mr-sm-2">
@@ -71,8 +77,10 @@
 			           	<option value="latin">Latin</option>
 			           	<option value="international">International</option>
 			           	<option value="rhythm and blues">Rhythm and Blues</option>
+			           	<option value="classical">Classical</option>
+			           	<option value="podcast">Podcast</option>
 					</select>
-		           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Discover Genres</button>
+		           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Genre</button>
 		       </form>	
 	    	</div>
     	</div>
@@ -139,7 +147,7 @@
 			        	src="" 
 			        	frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 			       		</iframe>
-			       		<p><small>Some YouTube videos do not allow embedding. If the video fails to load, try the app in a different browser (I recommend Firefox), or <a href="https://www.youtube.com/watch?v=${song.youtubelink}" target="_blank">watch it on YouTube</a>.</small></p>
+			       		<p><small>Some YouTube videos do not allow embedding. If the video fails to load, try a different browser (I recommend Firefox or Chrome), or <a href="https://www.youtube.com/watch?v=${song.youtubelink}" target="_blank">watch it on YouTube</a>.</small></p>
 			       		<p><small id="disclaimer">This application is for educational purposes only and is meant to demonstrate my ability to build Java/Spring applications. I do not own the content from the embedded YouTube video. All rights belong to their respective owners.</small></p>
 			       	
 					</div>

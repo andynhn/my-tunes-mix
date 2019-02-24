@@ -41,7 +41,7 @@ public class Song {
 	@Max(5)
 	private Integer rating;
 	
-	@Size(min=1, message="Please provide the YouTube Video ID.")
+	@Size(min=1, message="Please provide the YouTube Video ID")
 	@Size(max=255, message="YouTube Video ID must be less than 256 characters")
 	private String youtubelink;
 	
@@ -62,7 +62,7 @@ public class Song {
 			@Size(min = 1, message = "Please provide an artist for the song") @Size(max = 255, message = "Artist must be less than 256 characters") String artist,
 			@Size(min = 1, message = "Please provide a genre for the song") @Size(max = 255, message = "Genre must be less than 256 characters") String genre,
 			@Min(1) @Max(5) Integer rating,
-			@Size(min = 1, message = "Please provide the YouTube Video ID.") @Size(max = 255, message = "YouTube Video ID must be less than 256 characters") String youtubelink,
+			@Size(min = 1, message = "Please provide the YouTube Video ID") @Size(max = 255, message = "YouTube Video ID must be less than 256 characters") String youtubelink,
 			User user, Date createdAt, Date updatedAt) {
 		this.id = id;
 		this.title = title;

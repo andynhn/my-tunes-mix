@@ -37,4 +37,21 @@ public class UserValidator implements Validator {
 			errors.rejectValue("username",  "DuplicateUsername");
 		}
 	}
+	
+	public void validateUpdate(Object target, Errors errors, User user) {
+		User submittedUser = (User) target;
+		
+		// CHECK TO SEE IF THE PASSWORD CONFIRMATION MATCHES THE PASSWORD
+		if(!submittedUser.getPasswordConfirmation().equals(submittedUser.getPassword())) {
+			errors.rejectValue("passwordConfirmation",  "Match");
+		}
+		// IF A USER IS RETURNED FROM THE FIRST SEARCH AND THAT USER IS NOT THE LOGGED IN USER, THEN THAT EMAIL IS BEING USED BY SOMEONE ELSE. DISPLAY ERROR
+		if(userService.findByEmail(submittedUser.getEmail()) != null && !submittedUser.getEmail().equals(user.getEmail())) {
+			errors.rejectValue("email",  "DuplicateEmail");
+		}
+		// IF A USER IS RETURNED FROM THE FIRST SEARCH AND THAT USER IS NOT THE LOGGED IN USER, THEN THAT USERNAME IS BEING USED BY SOMEONE ELSE. DISPLAY ERROR
+		if(userService.findByUsername(submittedUser.getUsername()) != null && !submittedUser.getUsername().equals(user.getUsername())) {
+			errors.rejectValue("username",  "DuplicateUsername");
+		}
+	}
 }

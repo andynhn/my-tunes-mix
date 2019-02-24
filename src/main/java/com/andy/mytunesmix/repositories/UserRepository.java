@@ -9,5 +9,6 @@ import com.andy.mytunesmix.models.User;
 public interface UserRepository extends CrudRepository<User, Long> {
 	User findByEmail(String email);
 	User findByUsername(String username);
+	void deleteById(Long id);
 	
 }

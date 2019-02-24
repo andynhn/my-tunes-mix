@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -141,6 +142,70 @@ public class Users {
     	}
 
     	return "home.jsp";
+    }
+    
+    
+    @RequestMapping("/users/{id}/edit")
+    public String editUser(Model model, @PathVariable("id") Long id, HttpSession session, RedirectAttributes flash) {
+        // access userId from session
+    	Long userId = (Long) session.getAttribute("userId");
+
+    	
+    	// ...if userId is not in session, create a flash message then REDIRECT to login...
+    	if(userId == null) {
+    		flash.addFlashAttribute("error", "You must be logged in to view that page!");
+    		return "redirect:/login";
+    	} else if(userId != id) {
+    		flash.addFlashAttribute("error", "You are not allowed access to that page!");
+    		return "redirect:/home";
+    	}
+    		
+    	// access the user based on the user id that was saved in session and then add that user to the model
+    	User u = userService.findUserById(userId);
+		model.addAttribute("user", u);
+    	return "editProfile.jsp";
+    }
+    
+    @RequestMapping("/users/{id}/update")
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult result, @PathVariable("id") Long id, HttpSession session, RedirectAttributes flash) {
+        // access userId from session
+    	Long userId = (Long) session.getAttribute("userId");
+
+    	// ...if userId is not in session, create a flash message then REDIRECT to login...
+    	if(userId == null) {
+    		flash.addFlashAttribute("error", "You must be logged in to view that page!");
+    		return "redirect:/login";
+    	} else if(userId != id) {
+    		flash.addFlashAttribute("error", "You are not allowed access to that page!");
+    		return "redirect:/home";
+    	}
+    	
+    	userValidator.validateUpdate(user, result, userService.findUserById(userId));
+    	if(result.hasErrors()) {
+    		return "editProfile.jsp";
+    	} else {
+    		userService.update(user);
+    		return "redirect:/home";
+    	}
+    }
+    
+    // <---------- DELETE A USER BY ID ---------->
+    @RequestMapping(value="/users/{id}", method=RequestMethod.DELETE)
+    public String destroy(@PathVariable("id") Long id, HttpSession session, RedirectAttributes flash) {
+    	User u = userService.findUserById(id);
+    	Long userId = (Long) session.getAttribute("userId");
+    	
+    	if(userId == null) {
+    		return "redirect:/login";
+    	} else if(userId != u.getId()) {
+    		return "redirect:/home";
+    	} else {
+        	userService.deleteUser(id);
+    	}
+
+    	session.invalidate();
+    	flash.addFlashAttribute("deletion", "Your account has been deleted.");
+    	return "redirect:/";
     }
     
     // <---------- LOG OUT THE USER BY CLEARING SESSION ---------->
