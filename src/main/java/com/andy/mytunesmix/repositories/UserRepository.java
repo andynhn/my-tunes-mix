@@ -1,5 +1,7 @@
 package com.andy.mytunesmix.repositories;
 
+// By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

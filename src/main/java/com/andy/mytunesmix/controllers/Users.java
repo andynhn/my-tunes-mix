@@ -1,5 +1,7 @@
 package com.andy.mytunesmix.controllers;
 
+// By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+	
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,6 +129,9 @@ public class Users {
         			}
         		}
         		model.addAttribute("songs", songs);
+        		if(songs.size() == 0) {
+        			model.addAttribute("noresults", "Sorry. We did not find any results from your search. Try again.");
+        		}
         		return "home.jsp";
         	// ... if the search by genre form is filled and the search by artist form is not..
         	} else if(search == null && searchgenre != null) {
@@ -138,11 +143,18 @@ public class Users {
         			}
         		}
         		model.addAttribute("songs", songs);
+        		if(songs.size() == 0) {
+        			model.addAttribute("noresults", "Sorry. We did not find any results from your search. Try again.");
+        		}
         		return "home.jsp";
         	// ...if no search forms are filed, get all of the user's songs...    	
         	} else {
         		List<Song> songs = songService.allUserSongs(userId);
             	model.addAttribute("songs", songs);
+	        	// if the user has no songs in their library, create attribute emptylibrary and set to true. In JSP, remove search forms
+        		if(songs.size() == 0) {
+        			model.addAttribute("emptylibrary", true);
+        		}
             	return "home.jsp";
         	}
     	}

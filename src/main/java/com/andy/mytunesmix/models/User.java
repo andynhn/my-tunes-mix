@@ -1,5 +1,7 @@
 package com.andy.mytunesmix.models;
 
+// By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -27,18 +30,20 @@ public class User {
 	
 	@Email(message="Invalid Email")
 	@Size(min=1, message="Please provide a valid email")
+	@Size(max=255, message="Email has a 255 character limit")
 	private String email;
 	
-	@Size(min=3, message="Username must be 3 characters or longer")
-	@Size(max=255, message="Username must be less than 256 characters")
+	@Size(min=3, message="Username must be between 3 and 20 characters")
+	@Size(max=20, message="Username must be between 3 and 20 characters")
+	@Pattern(regexp="^[A-Za-z0-9_]+$", message="Username can only contain letters, numbers, and underscores")
 	private String username;
 	
-	@Size(min=2, message="First name must be 2 characters or longer")
-	@Size(max=255, message="First name must be less than 256 characters")
+	@Size(min=1, message="Please provide your first name")
+	@Size(max=255, message="First name has a 255 character limit")
 	private String fname;
 	
-	@Size(min=2, message="Last name must be 2 characters or longer")
-	@Size(max=255, message="Last name must be less than 256 characters")
+	@Size(min=1, message="Please provide your last name")
+	@Size(max=255, message="Last name has a 255 character limit")
 	private String lname;
 	
 	@Size(min=8, message="Password must be 8 characters or longer")
@@ -64,10 +69,10 @@ public class User {
 	public User() {
 	}
 
-	public User(Long id, @Email(message = "Invalid Email") 	@Size(min=1, message="Please provide a valid email") String email,
-			@Size(min = 3, message = "Username must be 3 characters or longer") @Size(max = 255, message = "Username must be less than 256 characters") String username,
-			@Size(min = 2, message = "First name must be 2 characters or longer") @Size(max = 255, message = "First name must be less than 256 characters") String fname,
-			@Size(min = 2, message = "Last name must be 2 characters or longer") @Size(max = 255, message = "Last name must be less than 256 characters") String lname,
+	public User(Long id, @Email(message = "Invalid Email") @Size(min = 1, message = "Please provide a valid email") @Size(max = 255, message="Email has a 255 character limit") String email,
+			@Size(min = 3, message = "Username must be between 3 and 20 characters") @Size(max = 20, message = "Username must be between 3 and 20 characters") @Pattern(regexp="^[A-Za-z0-9_]+$", message="Username can only contain letters, numbers, and underscores") String username,
+			@Size(min = 1, message = "Please provide your first name") @Size(max = 255, message = "First name has a 255 character limit") String fname,
+			@Size(min = 1, message = "Please provide your last name") @Size(max = 255, message = "Last name has a 255 character limit") String lname,
 			@Size(min = 8, message = "Password must be 8 characters or longer") @Size(max = 255, message = "Password must be less than 256 characters") String password,
 			String passwordConfirmation, Date createdAt, Date updatedAt, List<Song> songs) {
 		this.id = id;

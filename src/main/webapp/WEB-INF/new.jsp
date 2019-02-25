@@ -1,3 +1,4 @@
+<!-- By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/ -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -48,7 +49,6 @@
     
     <div class="container mt-3 d-flex justify-content-left">
 		<a href="/home"><button class="btn btn-sm btn-info my-2 my-sm-0 mr-3">Back to Library</button></a>
-		
 	</div>
 
     <div class="container addsong-page mt-2">
@@ -98,9 +98,9 @@
             </p>
             <p>
                 <form:input path="youtubelink" placeholder="YouTube Video ID" id="inputYouTubeLink" class="form-control" required="required"/>
-                <small class="example-input"><a href="https://www.youtube.com/" target="_blank">Search for a video on YouTube</a></small> <br>
-                <small class="example-input">E.g: https://youtu.be/<strong><span class="text-danger">VIDEO_ID</span></strong></small> <br>
-                <small class="example-input">E.g: https://www.youtube.com/watch?v=<strong><span class="text-danger">VIDEO_ID</span></strong></small>
+                <small class="example-input ml-2"><a href="https://www.youtube.com/" target="_blank">Search for a video on YouTube</a></small> <br>
+                <small class="example-input ml-2">E.g: https://youtu.be/<strong><span class="text-danger">VIDEO_ID</span></strong></small> <br>
+                <small class="example-input ml-2">E.g: https://www.youtube.com/watch?v=<strong><span class="text-danger">VIDEO_ID</span></strong></small>
             	<form:errors path="youtubelink" style="color: red;"/>
             </p>  
             <form:input type="hidden" path="user" value="${user.id}" required="required"/>

@@ -1,5 +1,7 @@
 package com.andy.mytunesmix.validators;
 
+// By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -36,6 +38,10 @@ public class UserValidator implements Validator {
 		if(userService.findByUsername(user.getUsername().toLowerCase()) != null) {
 			errors.rejectValue("username",  "DuplicateUsername");
 		}
+		// Don't allow certain words as username
+		if(user.getUsername().toLowerCase().contains("admin")) {
+			errors.rejectValue("username",  "InvalidUsername");
+		}
 	}
 	
 	public void validateUpdate(Object target, Errors errors, User user) {
@@ -53,5 +59,10 @@ public class UserValidator implements Validator {
 		if(userService.findByUsername(submittedUser.getUsername().toLowerCase()) != null && !submittedUser.getUsername().toLowerCase().equals(user.getUsername())) {
 			errors.rejectValue("username",  "DuplicateUsername");
 		}
+		// Don't allow certain words as username
+		if(submittedUser.getUsername().toLowerCase().contains("admin")) {
+			errors.rejectValue("username",  "InvalidUsername");
+		}
+		
 	}
 }

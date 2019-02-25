@@ -1,5 +1,7 @@
 package com.andy.mytunesmix.controllers;
 
+// By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -216,7 +218,6 @@ public class Songs {
 	    	model.addAttribute("user", userService.findUserById(userId));
 	    	// ...if the search by artist form is filled and the search by genre form is not...
 	    	if(search != null && searchgenre == null) {
-	    		System.out.println("Made it here");
 	    		List<Song> songsearch = songService.searchForSong(search);
 	    		ArrayList<Song> songs = new ArrayList<>();
 	    		for(int i=0; i<songsearch.size(); i++) {
@@ -225,6 +226,9 @@ public class Songs {
 	    			}
 	    		}
 	    		model.addAttribute("songs", songs);
+	    		if(songs.size() == 0) {
+        			model.addAttribute("noresults", "Sorry. We did not find any results from your search. Try again.");
+        		}
 	    		return "discover.jsp";
 	        // ... if the search by genre form is filled and the search by artist form is not..
 	    	} else if(search == null && searchgenre != null) {
@@ -236,11 +240,18 @@ public class Songs {
 	    			}
 	    		}
 	    		model.addAttribute("songs", songs);
+	    		if(songs.size() == 0) {
+        			model.addAttribute("noresults", "Sorry. We did not find any results from your search. Try again.");
+        		}
 	    		return "discover.jsp";
-	    	// ...otherwise, save all of the other songs in the list...
+	    	// ...otherwise, save all of the other songs (limit 500 in SongRepository) in the list...
 	    	} else {
 	    		List<Song> songs = songService.discoverSongs(userId);
 	        	model.addAttribute("songs", songs);
+	        	// if no other user has added any songs, create attribute emptydiscover and set to true. In JSP, remove search forms
+        		if(songs.size() == 0) {
+        			model.addAttribute("emptydiscover", true);
+        		}
 	        	return "discover.jsp";
 	    	}
 		}

@@ -1,3 +1,10 @@
+<!-- By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+Welcome! Thanks for checking out my application. I had a fun time building it, and I hope you like it!
+
+This site is for educational purposes and to demonstrate my ability to build Java/Spring applications.
+
+Version 1 deployed February 2019
+-->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

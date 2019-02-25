@@ -1,5 +1,7 @@
 package com.andy.mytunesmix.repositories;
 
+// By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;

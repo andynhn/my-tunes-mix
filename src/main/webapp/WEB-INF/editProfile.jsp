@@ -1,3 +1,4 @@
+<!-- By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/ -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -48,33 +49,48 @@
     </nav>
     
     <div class="container mt-3 d-flex justify-content-between">
-		<a href="/home"><button class="btn btn-sm btn-info my-2 my-sm-0 mr-3">Cancel</button></a>
-		<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDeletionModalCenter">
+		<a href="/home"><button class="btn btn-sm btn-info my-2 my-sm-0">Cancel</button></a>
+    	<span class="text-center my-2 my-sm-0 h5">Edit Profile</span>
+		<span><button class="btn btn-sm btn-danger my-2 my-sm-0" data-toggle="modal" data-target="#confirmDeletionModalCenter">
 			Delete Account
-		</button>
+		</button></span>
 	</div>
 	
 	<div class="container editprofile-page mt-2">
 	    <form:form method="POST" action="/users/${user.id}/update" modelAttribute="user" class="form-updateprofile">
-	    	<h5 class="text-center mb-3">Edit Profile</h5>
-	        <form:input type="email" path="email" placeholder="Email" id="inputEmailUpdate" class="form-control" required="required"/>
-            <form:errors path="email" class="red"/>
-	        <form:input type="text" path="username" placeholder="Username" id="inputUsernameUpdate" class="form-control" required="required"/>
-            <form:errors path="username" class="red"/>
-	        <form:input type="text" path="fname" placeholder="First Name" id="inputFnameUpdate" class="form-control" required="required"/>
-	        <form:errors path="fname" class="red"/>
-	        <form:input type="text" path="lname" placeholder="Last Name" id="inputLnameUpdate" class="form-control" required="required"/>
-	        <form:errors path="lname" class="red"/>
-	        <form:password path="password" placeholder="New Password" id="inputPasswordUpdate" class="form-control" required="required"/>
-	        <form:errors path="password" class="red"/>
-	       	<form:password path="passwordConfirmation" placeholder="Confirm New Password" id="inputConfirmPasswordUpdate" class="form-control" required="required"/>
-	        <form:errors path="passwordConfirmation" class="red"/>
+	    	<p class="edit-profile-block">
+	    		<form:label path="email" class="edit-profile-label">Email:</form:label>
+		        <form:input type="email" path="email" id="inputEmailUpdate" class="form-control" required="required"/>
+	            <form:errors path="email" class="red edit-profile-errors"/>
+            </p>
+            <p class="edit-profile-block">
+            	<form:label path="username" class="edit-profile-label">Username (3-20 characters):</form:label>
+		        <form:input type="text" path="username" id="inputUsernameUpdate" class="form-control" required="required"/>
+	            <form:errors path="username" class="red edit-profile-errors"/>
+            </p>
+            <p class="edit-profile-block">
+            	<form:label path="fname" class="edit-profile-label">First Name:</form:label>
+		        <form:input type="text" path="fname" id="inputFnameUpdate" class="form-control" required="required"/>
+		        <form:errors path="fname" class="red edit-profile-errors"/>
+	        </p>
+	        <p class="edit-profile-block">
+	        	<form:label path="lname" class="edit-profile-label">Last Name:</form:label>
+		        <form:input type="text" path="lname" id="inputLnameUpdate" class="form-control" required="required"/>
+		        <form:errors path="lname" class="red edit-profile-errors"/>
+	        </p>
+	        <p class="edit-profile-block">
+	        	<form:label path="password" class="edit-profile-label">New Password (at least 8 characters):</form:label>
+		        <form:password path="password" id="inputPasswordUpdate" class="form-control" required="required"/>
+		        <form:errors path="password" class="red edit-profile-errors"/>
+	        </p>
+	        <p class="edit-profile-block">
+	        	<form:label path="passwordConfirmation" class="edit-profile-label">Confirm New Password:</form:label>
+		       	<form:password path="passwordConfirmation" id="inputConfirmPasswordUpdate" class="form-control" required="required"/>
+		        <form:errors path="passwordConfirmation" class="red edit-profile-errors"/>
+	        </p>
 	        <button class="btn btn-md btn-primary btn-block mt-4" type="submit">Submit Changes</button>
 	    </form:form>
-
-
    	</div>
-   	
    	
    	<!-- Modal -->
 	<div class="modal fade" id="confirmDeletionModalCenter" tabindex="-1" role="dialog" aria-labelledby="confirmDeletionModalCenter" aria-hidden="true">
@@ -98,7 +114,6 @@
 		</div>
 		</div>
 	</div>
-   	
    	
    <!-- JavaScript -->
 	<script type="text/javascript" src="js/app.js"></script>

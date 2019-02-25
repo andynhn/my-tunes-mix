@@ -1,3 +1,4 @@
+<!-- By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/ -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -33,40 +34,33 @@
 
 	<div class="bg">
 	
-	<!-- NAV BAR -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-black-opacity">
-    	<a class="navbar-brand" href="/"><span class="brand"><span class="fa fa-music"></span> <strong>My Tunes Mix</strong></span></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="/register"><span class="fa fa-user"></span> Register</a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="/login"><span class="fa fa-sign-in"></span> <strong>Login</strong> <span class="sr-only">(current)</span></a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	
-	<div class="container text-center mt-3">
-		<!-- Errors displayed only if they are added to the model attribute in the controller -->
-
-	</div>
-	
-	<div class="container login-page">
-	   	<!-- Log In Form (regular form)-->
-	    <form method="post" action="/login" class="form-login">
-       	    <p class="gold text-center"><c:out value="${error}" /></p>
-	        <input type="email" id="inputEmailLogin" name="email" placeholder="Email" class="form-control" required autofocus/>
-	        <input type="password" id="inputPasswordLogin" name="password" placeholder="Password" class="form-control" required/>
-	        <button class="btn btn-md btn-warning btn-block" type="submit">Log In</button>
-	    	<!-- REDIRECT TO REGISTER -->
-            <p class="mt-3 white">Don't have an account? <a href="/register" id="redirect-to-register">Register.</a></p>
-	    </form>
-    </div>
+		<!-- NAV BAR -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-black-opacity">
+	    	<a class="navbar-brand" href="/"><span class="brand"><span class="fa fa-music"></span> <strong>My Tunes Mix</strong></span></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/register"><span class="fa fa-user"></span> Register</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/login"><span class="fa fa-sign-in"></span> <strong>Login</strong> <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="container login-page">
+		    <form method="post" action="/login" class="form-login">
+	       	    <p class="gold text-center"><c:out value="${error}" /></p>
+		        <input type="email" id="inputEmailLogin" name="email" placeholder="Email" class="form-control" required autofocus/>
+		        <input type="password" id="inputPasswordLogin" name="password" placeholder="Password" class="form-control" required/>
+		        <button class="btn btn-md btn-warning btn-block" type="submit">Log In</button>
+	            <p class="mt-3 white">Don't have an account? <a href="/register" id="redirect-to-register">Register.</a></p>
+		    </form>
+	    </div>
     
     </div>
     

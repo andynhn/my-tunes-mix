@@ -1,3 +1,4 @@
+<!-- By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/ -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -30,49 +31,44 @@
     </style>
 </head>
 <body>
-	<!-- NAV BAR -->
-		
 	<div class="bg">
+		<!-- NAV BAR -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-black-opacity">
+	    	<a class="navbar-brand" href="/"><span class="brand"><span class="fa fa-music"></span> <strong>My Tunes Mix</strong></span></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/register"><span class="fa fa-user"></span> <strong>Register</strong> <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/login"><span class="fa fa-sign-in"></span> Login</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="container register-page">
+		    <form:form method="POST" action="/register" modelAttribute="user" class="form-register">
+		        <form:input type="email" path="email" placeholder="Email" id="inputEmailRegister" class="form-control" required="required" autofocus="autofocus"/>
+	            <form:errors path="email" class="gold"/>
+		        <form:input type="text" path="username" placeholder="Username (3-20 characters)" id="inputUsername" class="form-control" required="required"/>
+	            <form:errors path="username" class="gold"/>
+		        <form:input type="text" path="fname" placeholder="First Name" id="inputFname" class="form-control" required="required"/>
+		        <form:errors path="fname" class="gold"/>
+		        <form:input type="text" path="lname" placeholder="Last Name" id="inputLname" class="form-control" required="required"/>
+		        <form:errors path="lname" class="gold"/>
+		        <form:password path="password" placeholder="Password (at least 8 characters)" id="inputPasswordRegister" class="form-control" required="required"/>
+		        <form:errors path="password" class="gold"/>
+		        <form:errors path="passwordConfirmation" class="gold"/>
+		        <form:password path="passwordConfirmation" placeholder="Confirm Password" id="inputConfirmPassword" class="form-control" required="required"/>
+		        <button class="btn btn-md btn-warning btn-block" type="submit">Register</button>
+	            <p class="mt-3 white">Already have an account? <a id="redirect-to-login" href="/login">Log in.</a></p>
+		    </form:form>
 	
-	<nav class="navbar navbar-expand-lg navbar-dark bg-black-opacity">
-    	<a class="navbar-brand" href="/"><span class="brand"><span class="fa fa-music"></span> <strong>My Tunes Mix</strong></span></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="/register"><span class="fa fa-user"></span> <strong>Register</strong> <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/login"><span class="fa fa-sign-in"></span> Login</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	
-	<div class="container register-page">
-	   	<!-- Register Form (Spring form) -->
-	    <form:form method="POST" action="/register" modelAttribute="user" class="form-register">
-	        <form:input type="email" path="email" placeholder="Email" id="inputEmailRegister" class="form-control" required="required" autofocus="autofocus"/>
-            <form:errors path="email" class="gold"/>
-	        <form:input type="text" path="username" placeholder="Username" id="inputUsername" class="form-control" required="required"/>
-            <form:errors path="username" class="gold"/>
-	        <form:input type="text" path="fname" placeholder="First Name" id="inputFname" class="form-control" required="required"/>
-	        <form:errors path="fname" class="gold"/>
-	        <form:input type="text" path="lname" placeholder="Last Name" id="inputLname" class="form-control" required="required"/>
-	        <form:errors path="lname" class="gold"/>
-	        <form:password path="password" placeholder="Password" id="inputPasswordRegister" class="form-control" required="required"/>
-	        <form:errors path="password" class="gold"/>
-	        <form:errors path="passwordConfirmation" class="gold"/>
-	        <form:password path="passwordConfirmation" placeholder="Confirm Password" id="inputConfirmPassword" class="form-control" required="required"/>
-	        <button class="btn btn-md btn-warning btn-block" type="submit">Register</button>
-            <!-- REDIRECT TO LOGIN -->
-            <p class="mt-3 white">Already have an account? <a id="redirect-to-login" href="/login">Log in.</a></p>
-	    </form:form>
-
-
-   	</div>
+	   	</div>
    	
    	</div>
    	

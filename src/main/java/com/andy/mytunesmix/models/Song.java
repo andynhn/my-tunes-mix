@@ -1,5 +1,7 @@
 package com.andy.mytunesmix.models;
 
+// By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -25,16 +27,16 @@ public class Song {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Size(min=1, message="Please provide a title for the song")
-	@Size(max=255, message="Title must be less than 256 characters")
+	@Size(min=1, message="Please provide a title")
+	@Size(max=255, message="Title has a 255 character limit")
 	private String title;
 	
-	@Size(min=1, message="Please provide an artist for the song")
-	@Size(max=255, message="Artist must be less than 256 characters")
+	@Size(min=1, message="Please provide an artist")
+	@Size(max=255, message="Artist has a 255 character limit")
 	private String artist;
 	
-	@Size(min=1, message="Please provide a genre for the song")
-	@Size(max=255, message="Genre must be less than 256 characters")
+	@Size(min=1, message="Please provide a genre")
+	@Size(max=255, message="Genre has a 255 character limit")
 	private String genre;
 	
 	@Min(1)
@@ -58,9 +60,9 @@ public class Song {
 	}
 
 	public Song(Long id,
-			@Size(min = 1, message = "Please provide a title for the song") @Size(max = 255, message = "Title must be less than 256 characters") String title,
-			@Size(min = 1, message = "Please provide an artist for the song") @Size(max = 255, message = "Artist must be less than 256 characters") String artist,
-			@Size(min = 1, message = "Please provide a genre for the song") @Size(max = 255, message = "Genre must be less than 256 characters") String genre,
+			@Size(min = 1, message = "Please provide a title") @Size(max = 255, message = "Title has a 255 character limit") String title,
+			@Size(min = 1, message = "Please provide an artist") @Size(max = 255, message = "Artist has a 255 character limit") String artist,
+			@Size(min = 1, message = "Please provide a genre") @Size(max = 255, message = "Genre has a 255 character limit") String genre,
 			@Min(1) @Max(5) Integer rating,
 			@Size(min = 1, message = "Please provide the YouTube Video ID") @Size(max = 255, message = "YouTube Video ID must be less than 256 characters") String youtubelink,
 			User user, Date createdAt, Date updatedAt) {

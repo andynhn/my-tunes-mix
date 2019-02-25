@@ -1,5 +1,7 @@
 package com.andy.mytunesmix.services;
 
+// By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/
+
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;

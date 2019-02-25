@@ -1,3 +1,4 @@
+<!-- By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/ -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -86,11 +87,11 @@
     					</form>
     				</c:otherwise>
 	    		</c:choose>
-		    	<p class="mt-3"><small id="disclaimer">This application is for educational purposes only and is meant to demonstrate my ability to build Java/Spring applications. I do not own the content from the embedded YouTube video. All rights belong to their respective owners.</small></p>
-    			<a href="https://www.youtube.com/watch?v=${song.youtubelink}" target="_blank" class="btn btn-sm btn-primary">Watch on YouTube</a>
+		    	<p class="mt-3"><small id="disclaimer">I do not own the content from the embedded YouTube video. All rights belong to their respective owners.</small></p>
+    			<a href="https://www.youtube.com/watch?v=${song.youtubelink}" target="_blank" class="btn btn-sm btn-primary mb-2">Watch on YouTube</a>
     		</div>
     		<div class="col-xs-0 col-md-0 col-lg-8">
-    			<iframe width="640" height="360" 
+    			<iframe width="100%" height="380" 
 		        	src="https://www.youtube.com/embed/${song.youtubelink}?autoplay=1&enablejsapi=1" 
 		        	frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 		       	</iframe>

@@ -1,3 +1,5 @@
+/* By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/ */
+
 @charset "ISO-8859-1";
 		
 #wrapper-text {
@@ -34,16 +36,10 @@
 /*----- REGISTER FORM -----*/
 
 .register-page {
-	/*display: -ms-flexbox;
-	display: flex;
-	-ms-flex-align: center;
-	align-items: center;*/
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
-	/*padding-top: 40px;
-	padding-bottom: 40px;*/
 }
 .form-register {
 	width: 100%;
@@ -107,16 +103,10 @@
 /*----- LOGIN FORM -----*/
 
 .login-page {
-	/*display: -ms-flexbox;
-	display: flex;
-	-ms-flex-align: center;
-	align-items: center; */
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
-	/*padding-top: 40px;
-	padding-bottom: 40px;*/
 }
 .form-login {
 	width: 100%;
@@ -213,47 +203,16 @@
 .form-updateprofile .form-control:focus {
 	z-index: 2;
 }
-#inputEmailUpdate {
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
+
+.edit-profile-label {
+	margin-bottom: 3px;
+	font-size: 14px;
 }
-#inputUsernameUpdate {
-	margin-top: -1px;
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
+.edit-profile-errors {
+	font-size: 14px;
 }
-#inputFnameUpdate {
-	margin-top: -1px;
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
-}
-#inputLnameUpdate {
-	margin-top: -1px;
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
-}
-#inputPasswordUpdate {
-	margin-top: -1px;
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
-}
-#inputConfirmPasswordUpdate {
-	margin-bottom: 15px;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
+.edit-profile-block {
+	margin-bottom: 10px;
 }
 
 /*----- GENERAL CSS STYLING -----*/
@@ -288,4 +247,8 @@
 }
 .bg-black {
 	background: black;
+}
+.triangle-play-button {
+	font-size:20px;
+	color:teal;
 }

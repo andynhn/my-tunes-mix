@@ -1,3 +1,4 @@
+<!-- By Andy N.H. Nguyen - https://andynhn.me/ - https://github.com/andynhn/ -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -47,49 +48,49 @@
     </nav>
     
 	<div class="container text-center mt-3">
-		<!-- Errors displayed only if they are added to the model attribute in the controller -->
 	    <p style="color: red;"><c:out value="${error}" /></p>
 	</div>
     
     <div class="container mt-3">
     	<div class="container">
-	    	<div class="row d-flex justify-content-between">
-				<form action="/home" method="get" class="form-inline my-2 my-lg-0">
-				       <% if(request.getParameter("search") != null && request.getParameter("searchgenre") == null) { %>
-				           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search Artists" name="search" value='<%= request.getParameter("search") %>' aria-label="Search">
-				       <% } else { %>
-				           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search Artists" name="search" aria-label="Search">
-				       <% } %>
-				    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Artist</button>
-				</form>
-		       <form action="/home" method="get" class="form-inline my-2 my-lg-0">
-		       		<select name="searchgenre" id="inputSongGenre" class="form-control form-control-sm mr-sm-2">
-			           	<option value=""> -- GENRE -- </option>
-	                	<option value="acoustic">Acoustic</option>
-	                	<option value="alternative">Alternative</option>
-	                	<option value="classical">Classical</option>
-	                	<option value="comedy">Comedy</option>
-	                	<option value="country">Country</option>
-	                	<option value="dance electronic">Dance/Electronic</option>
-	                	<option value="easy listening">Easy Listening</option>
-	                	<option value="folk">Folk</option>
-	                	<option value="hip hop">Hip-Hop</option>
-	                	<option value="holiday">Holiday</option>
-	                	<option value="instrumental">Instrumental</option>
-	                	<option value="jazz">Jazz</option>
-	                	<option value="orchestral">Orchestral</option>
-	                	<option value="podcast">Podcast</option>
-	                	<option value="pop">Pop</option>
-	                	<option value="rhythm and blues">Rhythm and Blues</option>
-	                	<option value="rock">Rock</option>
-	                	<option value="soundtrack">Soundtrack</option>
-	                	<option value="world">World</option>
-					</select>
-		           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Genre</button>
-		       </form>	
-	    	</div>
+	    	<c:if test="${emptylibrary != true}">
+		    	<div class="row d-flex justify-content-between">
+					<form action="/home" method="get" class="form-inline my-2 my-lg-0">
+					       <% if(request.getParameter("search") != null && request.getParameter("searchgenre") == null) { %>
+					           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search Artists" name="search" value='<%= request.getParameter("search") %>' aria-label="Search">
+					       <% } else { %>
+					           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search Artists" name="search" aria-label="Search">
+					       <% } %>
+					    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Artist</button>
+					</form>
+			       <form action="/home" method="get" class="form-inline my-2 my-lg-0">
+			       		<select name="searchgenre" id="inputSongGenre" class="form-control form-control-sm mr-sm-2">
+				           	<option value=""> -- GENRE -- </option>
+		                	<option value="acoustic">Acoustic</option>
+		                	<option value="alternative">Alternative</option>
+		                	<option value="classical">Classical</option>
+		                	<option value="comedy">Comedy</option>
+		                	<option value="country">Country</option>
+		                	<option value="dance electronic">Dance/Electronic</option>
+		                	<option value="easy listening">Easy Listening</option>
+		                	<option value="folk">Folk</option>
+		                	<option value="hip hop">Hip-Hop</option>
+		                	<option value="holiday">Holiday</option>
+		                	<option value="instrumental">Instrumental</option>
+		                	<option value="jazz">Jazz</option>
+		                	<option value="orchestral">Orchestral</option>
+		                	<option value="podcast">Podcast</option>
+		                	<option value="pop">Pop</option>
+		                	<option value="rhythm and blues">Rhythm and Blues</option>
+		                	<option value="rock">Rock</option>
+		                	<option value="soundtrack">Soundtrack</option>
+		                	<option value="world">World</option>
+						</select>
+			           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Genre</button>
+			       </form>	
+		    	</div>
+		    </c:if>
     	</div>
-       
        
         <table class="table table-sm mt-2">
             <thead>
@@ -106,9 +107,8 @@
                 <c:forEach items="${songs}" var="song">
                     <tr>
                     	<td>
-		                   	<!-- Button trigger modal -->
 							<button class="btn modal-button" data-toggle="modal" data-target="#viewVideoModalCenter" data-id="${song.youtubelink}">
-								<i class="fa fa-play" style="font-size:25px;color:teal"></i>
+								<i class="fa fa-play triangle-play-button"></i>
 							</button>
                     	</td>
                         <td class="capitalize"><a href="/songs/${song.id}">${song.title}</a></td>
@@ -125,36 +125,34 @@
 							</c:choose>
                         </td>
                         <td>
-                            <!--  <form action="/songs/${song.id}" method="post">
-                            	<a href="/songs/${song.id}/edit" class="btn btn-sm btn-info">Edit</a>
-                                <input type="hidden" name="_method" value="delete">
-                                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                            </form> -->
-                            <!-- Button trigger modal -->
-                            <a href="/songs/${song.id}/edit" class="btn btn-sm btn-info">Edit</a>
-							<button class="btn modal-button-delete btn-sm btn-danger" data-toggle="modal" data-target="#confirmSongDeletionModalCenter" data-id="${song.id}" data-title="${song.title}" data-artist="${song.artist}">
+                            <a href="/songs/${song.id}/edit" class="btn btn-sm btn-info mb-1 mr-1">Edit</a>
+							<span><button class="btn modal-button-delete btn-sm btn-danger mb-1" data-toggle="modal" data-target="#confirmSongDeletionModalCenter" data-id="${song.id}" data-title="${song.title}" data-artist="${song.artist}">
 								Delete
-							</button>
+							</button></span>
                         </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
+        <p class="text-center"><c:out value="${noresults}"></c:out></p>
+        <c:if test="${emptylibrary == true}">
+        	<p class="text-center">Start by <a href="/songs/new">adding tunes</a> to your library or <a href="/discover">discovering tunes</a> added by others</p>
+        </c:if>
     </div>
     
-    <!-- Video Modal -->
+    <!-- Modal -->
 	<div class="modal fade" id="viewVideoModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="youtube-iframe">
 					
-						<iframe width="464" height="261" 
+						<iframe width="100%" height="261" 
 			        	src="" 
 			        	frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 			       		</iframe>
 			       		<p><small>Some YouTube videos do not allow embedding. If the video fails to load, try a different browser (I recommend Firefox or Chrome), or <a href="https://www.youtube.com/watch?v=${song.youtubelink}" target="_blank">watch it on YouTube</a>.</small></p>
-			       		<p><small id="disclaimer">This application is for educational purposes only and is meant to demonstrate my ability to build Java/Spring applications. I do not own the content from the embedded YouTube video. All rights belong to their respective owners.</small></p>
+			       		<p><small id="disclaimer">I do not own the content from the embedded YouTube video. All rights belong to their respective owners.</small></p>
 			       	
 					</div>
 				</div>
@@ -165,10 +163,7 @@
 		</div>
 	</div>
 	
-	
-	
-	
-    <!-- Delete Song Modal -->
+    <!-- Modal -->
 	<div class="modal fade" id="confirmSongDeletionModalCenter" tabindex="-1" role="dialog" aria-labelledby="confirmSongDeletionModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
@@ -191,9 +186,12 @@
 		</div>
 	</div>
    	
+   	
    <!-- JavaScript -->
 	<script type="text/javascript" src="js/app.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script>
 	
 		$(document).on("click", ".modal-button", function() {
@@ -215,10 +213,7 @@
 			$(".delete-song-footer form").attr("action", songid);
 		})
 
-
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  
+	
 </body>
 </html>
