@@ -58,11 +58,11 @@
 		    	<div class="row d-flex justify-content-between">
 					<form action="/discover" method="get" class="form-inline my-2 my-lg-0">
 					       <% if(request.getParameter("search") != null && request.getParameter("searchgenre") == null) { %>
-					           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Discover Artists" name="search" value='<%= request.getParameter("search") %>' aria-label="Search">
+					           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search Artists" name="search" value='<%= request.getParameter("search") %>' aria-label="Search" size="15">
 					       <% } else { %>
-					           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Discover Artists" name="search" aria-label="Search">
+					           <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search Artists" name="search" aria-label="Search" size="15">
 					       <% } %>
-					    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Artist</button>
+					    <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search</button>
 					</form>
 			       <form action="/discover" method="get" class="form-inline my-2 my-lg-0">
 			       		<select name="searchgenre" id="inputSongGenre" class="form-control form-control-sm mr-sm-2">
@@ -87,7 +87,7 @@
 		                	<option value="soundtrack">Soundtrack</option>
 		                	<option value="world">World</option>
 						</select>
-			           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search by Genre</button>
+			           <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit">Search</button>
 			       </form>	
 		    	</div>
 	    	</c:if>

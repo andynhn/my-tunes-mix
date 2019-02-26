@@ -121,6 +121,18 @@ public class Users {
         	model.addAttribute("user", userService.findUserById(userId));
         	// ...if the search by artist form is filled and the search by genre form is not...
         	if(search != null && searchgenre == null) {
+        		// ...if the search artist input is longer than 255 characters
+        		if(search.length() > 255) {
+        			model.addAttribute("error", "Search must be less than 256 characters");
+        			List<Song> songs = songService.allUserSongs(userId);
+                	model.addAttribute("songs", songs);
+    	        	// if the user has no songs in their library, create attribute emptylibrary and set to true. In JSP, remove search forms
+            		if(songs.size() == 0) {
+            			model.addAttribute("emptylibrary", true);
+            		}
+                	return "home.jsp";
+        		}
+        		// ...otherwise, perform the search
         		List<Song> songsearch = songService.searchForSong(search);
         		ArrayList<Song> songs = new ArrayList<>();
         		for(int i=0; i<songsearch.size(); i++) {
@@ -135,6 +147,18 @@ public class Users {
         		return "home.jsp";
         	// ... if the search by genre form is filled and the search by artist form is not..
         	} else if(search == null && searchgenre != null) {
+        		// ...if the search genre input is longer than 255 characters
+        		if(searchgenre.length() > 255) {
+        			model.addAttribute("error", "Search must be less than 256 characters");
+        			List<Song> songs = songService.allUserSongs(userId);
+                	model.addAttribute("songs", songs);
+    	        	// if the user has no songs in their library, create attribute emptylibrary and set to true. In JSP, remove search forms
+            		if(songs.size() == 0) {
+            			model.addAttribute("emptylibrary", true);
+            		}
+                	return "home.jsp";
+        		}
+        		// ...otherwise, perform the search
         		List<Song> genresearch = songService.searchSongsByGenre(searchgenre);
         		ArrayList<Song> songs = new ArrayList<>();
         		for(int i=0; i<genresearch.size(); i++) {
@@ -147,7 +171,7 @@ public class Users {
         			model.addAttribute("noresults", "Sorry. We did not find any results from your search. Try again.");
         		}
         		return "home.jsp";
-        	// ...if no search forms are filed, get all of the user's songs...    	
+        	// ...if there is no search form submitted, get all of the user's songs...    	
         	} else {
         		List<Song> songs = songService.allUserSongs(userId);
             	model.addAttribute("songs", songs);
@@ -186,11 +210,11 @@ public class Users {
     	Long userId = (Long) session.getAttribute("userId");
     	// ...if userId is not in session, REDIRECT to login...
     	if(userId == null) {
-    		flash.addFlashAttribute("error", "You must be logged in to view that page!");
+    		flash.addFlashAttribute("error", "You must be logged in to view that page");
     		return "redirect:/login";
     	// ...if the user tries to edit a song that they did not add themselves...
     	} else if(userId != id) {
-    		flash.addFlashAttribute("error", "You are not allowed access to that page!");
+    		flash.addFlashAttribute("error", "You are not allowed access to that page");
     		return "redirect:/home";
     	} else {
     		//...otherwise, check to see if the form data is valid...
@@ -200,6 +224,7 @@ public class Users {
         	//...if the form data is valid, update the user, then redirect to home page
         	} else {
         		userService.update(user);
+        		flash.addFlashAttribute("success", "Your changes have been saved");
         	}
         	return "redirect:/home";
     	}

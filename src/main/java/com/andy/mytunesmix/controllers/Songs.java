@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.andy.mytunesmix.models.Song;
-import com.andy.mytunesmix.models.User;
 import com.andy.mytunesmix.services.SongService;
 import com.andy.mytunesmix.services.UserService;
 import com.andy.mytunesmix.validators.SongValidator;
@@ -110,7 +109,7 @@ public class Songs {
 			return "redirect:/home";
 		// ...if the song exists, but does not belong to the user...
 		} else if(userId != s.getUser().getId()) {
-			flash.addFlashAttribute("error", "You cannot edit this song");
+			flash.addFlashAttribute("error", "Access denied");
 			return "redirect:/home";
 		// ...if the above checks pass, proceed with rendering the edit page...
 		} else {
@@ -139,7 +138,7 @@ public class Songs {
 			return "redirect:/home";
 		// ...if the song exists, but does not belong to the user...
 		} else if(userId != s.getUser().getId()) {
-			flash.addFlashAttribute("error", "You cannot edit this song");
+			flash.addFlashAttribute("error", "Access denied");
 			return "redirect:/home";
 		// ...if the above checks pass, proceed with editing the song...
 		} else {
@@ -151,6 +150,7 @@ public class Songs {
 			} else {
 				// if all the above checks pass, update the song
 				songService.update(song);
+				flash.addFlashAttribute("success", "Your changes have been saved");
 			}
 			return "redirect:/home";
 		}
@@ -173,7 +173,7 @@ public class Songs {
 			return "redirect:/home";
 		// ...if the user tries to delete a song that they did not create...
 		} else if(userId != s.getUser().getId()) {
-			flash.addFlashAttribute("error", "You cannot delete this song");
+			flash.addFlashAttribute("error", "Access denied");
 			return "redirect:/home";
 		// ...if the above checks pass, delete the song
 		} else {
@@ -218,6 +218,18 @@ public class Songs {
 	    	model.addAttribute("user", userService.findUserById(userId));
 	    	// ...if the search by artist form is filled and the search by genre form is not...
 	    	if(search != null && searchgenre == null) {
+	    		// ...if the search artist input is longer than 255 characters
+	    		if(search.length() > 255) {
+	    			model.addAttribute("error", "Search must be less than 256 characters");
+	    			List<Song> songs = songService.discoverSongs(userId);
+		        	model.addAttribute("songs", songs);
+		        	// if no other user has added any songs, create attribute emptydiscover and set to true. In JSP, remove search forms
+	        		if(songs.size() == 0) {
+	        			model.addAttribute("emptydiscover", true);
+	        		}
+	    			return "discover.jsp";
+	    		}
+	    		// ...otherwise, perform the search
 	    		List<Song> songsearch = songService.searchForSong(search);
 	    		ArrayList<Song> songs = new ArrayList<>();
 	    		for(int i=0; i<songsearch.size(); i++) {
@@ -232,6 +244,18 @@ public class Songs {
 	    		return "discover.jsp";
 	        // ... if the search by genre form is filled and the search by artist form is not..
 	    	} else if(search == null && searchgenre != null) {
+	    		// ...if the search genre input is longer than 255 characters
+	    		if(searchgenre.length() > 255) {
+	    			model.addAttribute("error", "Search must be less than 256 characters");
+	    			List<Song> songs = songService.discoverSongs(userId);
+		        	model.addAttribute("songs", songs);
+		        	// if no other user has added any songs, create attribute emptydiscover and set to true. In JSP, remove search forms
+	        		if(songs.size() == 0) {
+	        			model.addAttribute("emptydiscover", true);
+	        		}
+	    			return "discover.jsp";
+	    		}
+	    		// ...otherwise, perform the search
 	    		List<Song> genresearch = songService.searchSongsByGenre(searchgenre);
 	    		ArrayList<Song> songs = new ArrayList<>();
 	    		for(int i=0; i<genresearch.size(); i++) {
@@ -244,7 +268,7 @@ public class Songs {
         			model.addAttribute("noresults", "Sorry. We did not find any results from your search. Try again.");
         		}
 	    		return "discover.jsp";
-	    	// ...otherwise, save all of the other songs (limit 500 in SongRepository) in the list...
+	    	// ...if there is no search form submitted, save all of the other songs (limit 500 in SongRepository) in the list...
 	    	} else {
 	    		List<Song> songs = songService.discoverSongs(userId);
 	        	model.addAttribute("songs", songs);
